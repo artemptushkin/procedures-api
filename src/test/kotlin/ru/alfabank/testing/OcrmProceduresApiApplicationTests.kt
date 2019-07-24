@@ -1,4 +1,4 @@
-package ru.alfabank.testing.ocrmproceduresapi
+package ru.alfabank.testing
 
 import org.junit.Test
 import org.junit.runner.RunWith

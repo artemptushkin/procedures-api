@@ -1,4 +1,4 @@
-package ru.alfabank.testing.ocrmproceduresapi
+package ru.alfabank.testing
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
