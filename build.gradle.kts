@@ -1,5 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+buildscript {
+	repositories {
+		maven("http://binary/artifactory/public")
+	}
+}
+
 plugins {
 	id("org.springframework.boot") version "2.1.6.RELEASE"
 	id("io.spring.dependency-management") version "1.0.7.RELEASE"
@@ -12,8 +18,7 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
-	mavenCentral()
-	maven(url = "http://mvn/artifactory/thirdparty")
+	maven("http://binary/artifactory/public")
 }
 
 dependencies {
