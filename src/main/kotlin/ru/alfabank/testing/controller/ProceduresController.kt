@@ -11,7 +11,7 @@ class ProceduresController(val proceduresService : ProceduresService) {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = ["/{procedureRequest}/execute"])
-    fun execute(@PathVariable procedureRequest: ProcedureRequest, @RequestParam parameters: Map<String, Any>) {
+    fun execute(@PathVariable procedureRequest: ProcedureRequest, @RequestParam parameters: Map<String, String>) {
         procedureRequest.requestParameters.putAll(parameters)
         proceduresService.execute(procedureRequest)
     }

@@ -1,5 +1,5 @@
 package ru.alfabank.testing.domain
 
 data class ProcedureRequest(
-        val name: String, val requestParameters: MutableMap<String, Any>
+        val name: String, val requestParameters: MutableMap<String, String>
 )
