@@ -6,7 +6,7 @@ import org.springframework.validation.annotation.Validated
 import ru.alfabank.testing.configuration.ProcedureProperties
 import ru.alfabank.testing.configuration.ProcedureProperty
 import ru.alfabank.testing.domain.ProcedureRequest
-import javax.validation.Valid
+import ru.alfabank.testing.validation.ProcedureRequestConstraint
 
 @Service
 @Validated
@@ -14,7 +14,7 @@ class ProceduresService(
         private val procedureProperties: ProcedureProperties, private val procedureNameToJdbcCall: Map<String, SimpleJdbcCall>
 ) {
 
-    fun execute(@Valid procedureRequest: ProcedureRequest) {
+    fun execute(@ProcedureRequestConstraint procedureRequest: ProcedureRequest) {
         val procedure: ProcedureProperty = procedureProperties.properties.getValue(procedureRequest.name)
 
         val jdbcCallParameters = procedure.parameters
