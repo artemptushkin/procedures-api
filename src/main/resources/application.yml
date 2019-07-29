@@ -1,61 +1,69 @@
+spring:
+    datasource:
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        username: OCRM_CORE
+        password: CORETEST
+        url: jdbc:oracle:thin:@vocrm1db.MOSCOW.ALFAINTRA.NET:1521:OCRMFT7
+
 procedures:
-  refreshOffer:
-    name: "ocrm_core.add_test_offer_clck"
-    parameters:
-      offerType:
-        required: false
-        procedureKey: offerType
-        type: VARCHAR
-        default: CC2PAY
-      userId:
-        required: true
-        procedureKey: cus
-        type: VARCHAR
-      productGroupCode:
-        required: false
-        procedureKey: productGroupCode
-        type: VARCHAR
-        default: CC
-      channel:
-        required: false
-        procedureKey: CNNL
-        type: VARCHAR
-        default: ECO
-      acNumber:
-        required: false
-        procedureKey: ac_number
-        type: VARCHAR
-      ndlf:
-        required: false
-        procedureKey: ndlf_tag
-        type: number
-        default: 0
-      fot:
-        required: false
-        procedureKey: fot_tag
-        type: number
-        default: 0
-      isControlGroup:
-        required: false
-        procedureKey: is_control_group
-        type: number
-        default: 1
-      numberOfCards:
-        required: false
-        procedureKey: i
-        type: integer
-        default: 3
-      minCardLimit:
-        required: false
-        procedureKey: minCardLimit
-        type: number
-        default: 50000
-      maxCardLimit:
-        required: false
-        procedureKey: maxCardLimit
-        type: number
-        default: 68000
-      base_deal_number:
-        required: false
-        procedureKey: base_deal_number
-        type: VARCHAR
+  properties:
+    refreshOffer:
+      name: "add_test_offer_clck"
+      parameters:
+        offerType:
+          required: false
+          procedureKey: offerType
+          type: VARCHAR
+          default: CC2PAY
+        userId:
+          required: true
+          procedureKey: cus
+          type: VARCHAR
+        productGroupCode:
+          required: false
+          procedureKey: productGroupCode
+          type: VARCHAR
+          default: CC
+        channel:
+          required: false
+          procedureKey: CNNL
+          type: VARCHAR
+          default: ECO
+        acNumber:
+          required: false
+          procedureKey: ac_number
+          type: VARCHAR
+        ndlf:
+          required: false
+          procedureKey: ndlf_tag
+          type: number
+          default: 0
+        fot:
+          required: false
+          procedureKey: fot_tag
+          type: number
+          default: 0
+        isControlGroup:
+          required: false
+          procedureKey: is_control_group
+          type: number
+          default: 1
+        numberOfCards:
+          required: false
+          procedureKey: i
+          type: integer
+          default: 3
+        minCardLimit:
+          required: false
+          procedureKey: minCardLimit
+          type: number
+          default: 50000
+        maxCardLimit:
+          required: false
+          procedureKey: maxCardLimit
+          type: number
+          default: 68000
+        base_deal_number:
+          required: false
+          procedureKey: base_deal_number
+          type: VARCHAR

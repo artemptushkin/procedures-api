@@ -1,5 +1,6 @@
 package ru.alfabank.testing.configuration
 
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -13,17 +14,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class WebMvcConfiguration : WebMvcConfigurer {
 
     @Bean
-    fun procedureNameToJdbcCall(jdbcTemplate: JdbcTemplate, procedureProperties: ProcedureProperties): Map<String, SimpleJdbcCall> {
+    fun procedureNameToJdbcCall(dataSourceProperties: DataSourceProperties,
+                                jdbcTemplate: JdbcTemplate,
+                                procedureProperties: ProcedureProperties): Map<String, SimpleJdbcCall> {
         return procedureProperties.properties
                 .entries
                 .associate {
                     val procedure = it.value
-                    val jdbcCall = SimpleJdbcCall(jdbcTemplate).withProcedureName(procedure.name)
+                    val jdbcCall = SimpleJdbcCall(jdbcTemplate)
+                            .withProcedureName(procedure.name)
+                            .withCatalogName(dataSourceProperties.username)
+                            .withoutProcedureColumnMetaDataAccess()
                     procedure.parameters
                             .forEach { (_, parameter) ->
                                 jdbcCall.addDeclaredParameter(SqlParameter(parameter.procedureKey, parameter.type.oracleType)) }
 
-                    procedure.name to SimpleJdbcCall(jdbcTemplate).withProcedureName(procedure.name)
+                    procedure.name to jdbcCall
                 }
     }
 }

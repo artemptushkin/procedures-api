@@ -1,6 +1,5 @@
 package ru.alfabank.testing.controller
 
-import org.omg.CORBA.Object
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import ru.alfabank.testing.domain.ProcedureRequest
@@ -12,7 +11,7 @@ class ProceduresController(val proceduresService : ProceduresService) {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = ["/{procedureRequest}/execute"])
-    fun execute(@PathVariable procedureRequest: ProcedureRequest, @RequestParam parameters: Map<String, Object>) {
+    fun execute(@PathVariable procedureRequest: ProcedureRequest, @RequestParam parameters: Map<String, Any>) {
         procedureRequest.requestParameters.putAll(parameters)
         proceduresService.execute(procedureRequest)
     }

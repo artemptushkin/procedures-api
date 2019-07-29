@@ -17,7 +17,7 @@ class ParameterProperty {
     var required: Boolean = false
     lateinit var procedureKey: String
     lateinit var type: Type
-    lateinit var default: String
+    var default: String? = null
 }
 
 enum class Type(val oracleType: Int) {
