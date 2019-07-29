@@ -14,7 +14,7 @@ class ProceduresService(
         private val procedureProperties: ProcedureProperties, private val procedureNameToJdbcCall: Map<String, SimpleJdbcCall>
 ) {
 
-    fun execute(@ProcedureRequestConstraint procedureRequest: ProcedureRequest) {
+    fun execute(@ProcedureRequestConstraint("required params don't exist at the properties") procedureRequest: ProcedureRequest) {
         val procedure: ProcedureProperty = procedureProperties.properties.getValue(procedureRequest.name)
 
         val jdbcCallParameters = procedure.parameters
