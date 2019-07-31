@@ -29,7 +29,11 @@ pipeline {
             }
         }
         stage('docker login') {
-            sh("docker login --password=${password} --username=${username} ${docker_repository_url}")
+            steps {
+                script {
+                    sh("docker login --password=${password} --username=${username} ${docker_repository_url}")
+                }
+            }
         }
         stage('Run image build') {
             steps {
