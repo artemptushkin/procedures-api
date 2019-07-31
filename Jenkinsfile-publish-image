@@ -1,8 +1,7 @@
 def rtGradle
-def buildInfo = Artifactory.newBuildInfo()
 def UUID_DIR = UUID.randomUUID().toString()
 
-def gradleTasks = "clean build buildImage"
+def gradleTasks = "clean build buildImage --stacktrace --info --console=plain"
 def docker_publication_repository_key = 'infra'
 def docker_repository_url = "${docker_publication_repository_key}.binary.alfabank.ru"
 def artifact_name = "ocrm-procedures-api"
@@ -31,7 +30,7 @@ pipeline {
         stage('Run image build') {
             steps {
                 script {
-                    buildInfo = rtGradle.run switches: '--stacktrace --info --console=plain', tasks: gradleTasks, buildInfo: buildInfo
+                    sh "./gradlew ${gradleTasks}"
                 }
             }
         }
