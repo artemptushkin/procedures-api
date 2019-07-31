@@ -31,7 +31,13 @@ pipeline {
         stage('docker login') {
             steps {
                 script {
-                    sh("docker login --password=${password} --username=${username} ${docker_repository_url}")
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-artifactory',
+                                      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                        def username = env.USERNAME
+                        def password = env.PASSWORD
+
+                        sh("docker login --password=${password} --username=${username} ${docker_repository_url}")
+                    }
                 }
             }
         }
