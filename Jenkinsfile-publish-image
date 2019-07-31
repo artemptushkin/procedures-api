@@ -1,0 +1,52 @@
+def rtGradle
+def buildInfo = Artifactory.newBuildInfo()
+def UUID_DIR = UUID.randomUUID().toString()
+
+def gradleTasks = "clean build buildImage"
+def docker_publication_repository_key = 'infra'
+def docker_repository_url = "${docker_publication_repository_key}.binary.alfabank.ru"
+def artifact_name = "ocrm-procedures-api"
+def version = "0.0.1-SNAPSHOT"
+
+pipeline {
+    agent {
+        label {
+            label 'test'
+            customWorkspace UUID_DIR
+        }
+    }
+
+    stages {
+        stage('define build method') {
+            steps {
+                script {
+                    server = Artifactory.server 'alfa-laboratory'
+                    rtGradle = Artifactory.newGradleBuild()
+
+                    rtGradle.useWrapper = true
+                    rtGradle.usesPlugin = true
+                }
+            }
+        }
+        sh("docker login --password=${password} --username=${username} ${docker_repository_url}")
+        stage('Run image build') {
+            steps {
+                script {
+                    buildInfo = rtGradle.run switches: '--stacktrace --info --console=plain', tasks: gradleTasks, buildInfo: buildInfo
+                }
+            }
+        }
+        stage('push docker image') {
+            steps {
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-artifactory',
+                                  usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                    def username = env.USERNAME
+                    def password = env.PASSWORD
+
+                    sh("docker login --password=${password} --username=${username} ${docker_repository_url}")
+                }
+                sh("docker push ${docker_repository_url}/${artifact_name}:${version}")
+            }
+        }
+    }
+}
