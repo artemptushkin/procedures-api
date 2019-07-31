@@ -1,4 +1,5 @@
 
+import com.bmuschko.gradle.docker.DockerRegistryCredentials
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -53,6 +54,10 @@ tasks.register<DockerBuildImage>("buildImage") {
 
 	inputDir = file("build")
 	tags.add("${project.name}:${project.version}")
+}
+
+configure<DockerRegistryCredentials> {
+	url = "https://infra.binary.alfabank.ru"
 }
 
 tasks.withType<KotlinCompile> {
