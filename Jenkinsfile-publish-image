@@ -31,7 +31,7 @@ pipeline {
         stage('docker login') {
             steps {
                 script {
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-artifactory',
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins_artifactory',
                                       usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         def username = env.USERNAME
                         def password = env.PASSWORD
@@ -51,7 +51,7 @@ pipeline {
         stage('push docker image') {
             steps {
                 script {
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-artifactory',
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins_artifactory',
                                       usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                         def username = env.USERNAME
                         def password = env.PASSWORD
