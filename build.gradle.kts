@@ -41,7 +41,7 @@ dependencies {
 }
 
 tasks.register<Dockerfile>("createDockerFile") {
-	from("java:8")
+	from("java:8u92-alpine")
 	addFile("./libs/${project.name}-${project.version}.jar", "${project.name}-${project.version}.jar")
 	exposePort(9090)
 	destFile = file("${project.buildDir}/Dockerfile")
@@ -56,7 +56,7 @@ tasks.register<DockerBuildImage>("buildImage") {
 	tags.add("${project.name}:${project.version}")
 
 	registryCredentials = DockerRegistryCredentials().apply {
-		url = "https://infra.binary.alfabank.ru"
+		url = "https://eco.binary.alfabank.ru"
 	}
 }
 
