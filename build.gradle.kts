@@ -1,5 +1,7 @@
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import com.bmuschko.gradle.docker.tasks.image.*
 
 buildscript {
 	repositories {
@@ -37,17 +39,20 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-tasks.register<Dockerfile>("createDockerfile") {
-	from("openjdk:jre-alpine")
-	copyFile("build/libs/${project.name}-${project.version}", "${project.name}-${project.version}.jar")
+tasks.register<Dockerfile>("createDockerFile") {
+	from("java:8")
+	addFile("./libs/${project.name}-${project.version}.jar", "${project.name}-${project.version}.jar")
 	exposePort(9090)
-	defaultCommand("-jar ${project.name}-${project.version}.jar")
+	destFile = file("${project.buildDir}/Dockerfile")
+	entryPoint("java")
+	defaultCommand("-jar", "${project.name}-${project.version}.jar")
 }
 
 tasks.register<DockerBuildImage>("buildImage") {
-	dependsOn("createDockerfile")
-	inputDir = project.file("build/docker")
-	tags.add("procedure-api")
+	dependsOn("createDockerFile")
+
+	inputDir = file("build")
+	tags.add("${project.name}:${project.version}")
 }
 
 tasks.withType<KotlinCompile> {
