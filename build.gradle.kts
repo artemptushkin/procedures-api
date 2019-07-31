@@ -51,7 +51,7 @@ tasks.register<Dockerfile>("createDockerFile") {
 }
 
 configure<DockerExtension> {
-	url = "https://eco.binary.alfabank.ru"
+	url = "https://eco.binary.alfabank.ru/v2"
 }
 
 tasks.register<DockerBuildImage>("buildImage") {
@@ -61,7 +61,7 @@ tasks.register<DockerBuildImage>("buildImage") {
 	tags.add("${project.name}:${project.version}")
 
 	registryCredentials = DockerRegistryCredentials().apply {
-		url = "https://eco.binary.alfabank.ru"
+		url = "https://eco.binary.alfabank.ru/v2"
 	}
 }
 
