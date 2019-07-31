@@ -56,10 +56,6 @@ tasks.register<DockerBuildImage>("buildImage") {
 	tags.add("${project.name}:${project.version}")
 }
 
-configure<DockerExtension> {
-	url = "https://infra.binary.alfabank.ru"
-}
-
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
