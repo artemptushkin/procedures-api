@@ -1,4 +1,5 @@
 
+import com.bmuschko.gradle.docker.DockerExtension
 import com.bmuschko.gradle.docker.DockerRegistryCredentials
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
@@ -49,7 +50,7 @@ tasks.register<Dockerfile>("createDockerFile") {
 	defaultCommand("-jar", "${project.name}-${project.version}.jar")
 }
 
-configure<DockerRegistryCredentials> {
+configure<DockerExtension> {
 	url = "https://eco.binary.alfabank.ru/v2"
 }
 
