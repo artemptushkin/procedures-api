@@ -28,7 +28,9 @@ pipeline {
                 }
             }
         }
-        sh("docker login --password=${password} --username=${username} ${docker_repository_url}")
+        stage('docker login') {
+            sh("docker login --password=${password} --username=${username} ${docker_repository_url}")
+        }
         stage('Run image build') {
             steps {
                 script {
