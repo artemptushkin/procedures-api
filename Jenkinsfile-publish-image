@@ -38,14 +38,16 @@ pipeline {
         }
         stage('push docker image') {
             steps {
-                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-artifactory',
-                                  usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-                    def username = env.USERNAME
-                    def password = env.PASSWORD
+                script {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-artifactory',
+                                      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                        def username = env.USERNAME
+                        def password = env.PASSWORD
 
-                    sh("docker login --password=${password} --username=${username} ${docker_repository_url}")
+                        sh("docker login --password=${password} --username=${username} ${docker_repository_url}")
+                    }
+                    sh("docker push ${docker_repository_url}/${artifact_name}:${version}")
                 }
-                sh("docker push ${docker_repository_url}/${artifact_name}:${version}")
             }
         }
     }
