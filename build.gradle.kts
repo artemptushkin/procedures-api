@@ -1,5 +1,6 @@
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -53,6 +54,11 @@ tasks.register<DockerBuildImage>("buildImage") {
 
 	inputDir = file("build")
 	tags.add("docker.moscow.alfaintra.net/${project.name}:${project.version}")
+}
+
+tasks.register<DockerPushImage>("dockerPushImage") {
+	imageName = "docker.moscow.alfaintra.net/${project.name}"
+	tag = "${project.version}"
 }
 
 tasks.withType<KotlinCompile> {
