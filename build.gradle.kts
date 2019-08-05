@@ -52,7 +52,7 @@ tasks.register<DockerBuildImage>("buildImage") {
 	dependsOn("createDockerFile")
 
 	inputDir = file("build")
-	tags.add("${project.name}:${project.version}")
+	tags.add("docker.moscow.alfaintra.net/${project.name}:${project.version}")
 }
 
 tasks.withType<KotlinCompile> {
