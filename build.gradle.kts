@@ -42,6 +42,7 @@ dependencies {
 
 tasks.register<Dockerfile>("createDockerFile") {
 	from("java:8u92-alpine")
+	exposePort(8080)
 	addFile("./libs/${project.name}-${project.version}.jar", "${project.name}-${project.version}.jar")
 	destFile = file("${project.buildDir}/Dockerfile")
 	entryPoint("java")
