@@ -43,7 +43,6 @@ dependencies {
 tasks.register<Dockerfile>("createDockerFile") {
 	from("java:8u92-alpine")
 	addFile("./libs/${project.name}-${project.version}.jar", "${project.name}-${project.version}.jar")
-	exposePort(2222)
 	destFile = file("${project.buildDir}/Dockerfile")
 	entryPoint("java")
 	defaultCommand("-jar", "${project.name}-${project.version}.jar")
@@ -59,6 +58,13 @@ tasks.register<DockerBuildImage>("buildImage") {
 tasks.register<DockerPushImage>("dockerPushImage") {
 	imageName = "docker.moscow.alfaintra.net/${project.name}"
 	tag = "${project.version}"
+}
+
+tasks.register("publish") {
+	dependsOn("clean")
+	dependsOn("build")
+	dependsOn("buildImage")
+	dependsOn("dockerPushImage")
 }
 
 tasks.withType<KotlinCompile> {
