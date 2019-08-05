@@ -1,6 +1,4 @@
 
-import com.bmuschko.gradle.docker.DockerExtension
-import com.bmuschko.gradle.docker.DockerRegistryCredentials
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -44,14 +42,10 @@ dependencies {
 tasks.register<Dockerfile>("createDockerFile") {
 	from("java:8u92-alpine")
 	addFile("./libs/${project.name}-${project.version}.jar", "${project.name}-${project.version}.jar")
-	exposePort(9090)
+	exposePort(2222)
 	destFile = file("${project.buildDir}/Dockerfile")
 	entryPoint("java")
 	defaultCommand("-jar", "${project.name}-${project.version}.jar")
-}
-
-configure<DockerExtension> {
-	url = "https://eco.binary.alfabank.ru/v2"
 }
 
 tasks.register<DockerBuildImage>("buildImage") {
@@ -59,12 +53,6 @@ tasks.register<DockerBuildImage>("buildImage") {
 
 	inputDir = file("build")
 	tags.add("${project.name}:${project.version}")
-
-	registryCredentials = DockerRegistryCredentials().apply {
-		url = "https://eco.binary.alfabank.ru/v2"
-		username = "jenkins"
-		password = "123456"
-	}
 }
 
 tasks.withType<KotlinCompile> {
