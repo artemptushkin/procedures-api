@@ -23,7 +23,7 @@ plugins {
 apply(plugin = "com.bmuschko.docker-remote-api")
 
 group = "ru.alfabank.testing"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.4-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {

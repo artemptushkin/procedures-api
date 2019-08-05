@@ -5,6 +5,8 @@ spring:
         password: CORETEST
         url: jdbc:oracle:thin:@vocrm1db.MOSCOW.ALFAINTRA.NET:1521:OCRMFT7
 
+
+
 procedures:
   properties:
     refreshOffer:
