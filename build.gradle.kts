@@ -1,33 +1,25 @@
-
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
-import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 
 buildscript {
 	repositories {
-		maven("http://binary/artifactory/public")
-	}
-	dependencies {
-		classpath("com.bmuschko:gradle-docker-plugin:3.2.5")
+		mavenCentral()
 	}
 }
-
 plugins {
-	id("org.springframework.boot") version "2.1.6.RELEASE"
-	id("io.spring.dependency-management") version "1.0.7.RELEASE"
-	kotlin("jvm") version "1.2.71"
-	kotlin("plugin.spring") version "1.2.71"
+	id("org.springframework.boot") version "2.3.5.RELEASE"
+	id("io.spring.dependency-management") version "1.0.10.RELEASE"
+	id("org.jetbrains.kotlin.jvm") version "1.4.20-RC"
+	id("org.jetbrains.kotlin.plugin.spring") version "1.4.20-RC"
 }
 
-apply(plugin = "com.bmuschko.docker-remote-api")
-
-group = "ru.alfabank.testing"
+group = "io.github.artemptushkin.procedures.api"
 version = "0.0.4-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
-	maven("http://binary/artifactory/public")
+	mavenCentral()
 }
 
 dependencies {
@@ -35,43 +27,34 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("com.oracle:ojdbc6:11.2.0.4")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+	implementation("org.postgresql:postgresql:42.2.18")
+	implementation("mysql:mysql-connector-java:8.0.22")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-}
-
-tasks.register<Dockerfile>("createDockerFile") {
-	from("java:8u92-alpine")
-	exposePort(8080)
-	addFile("./libs/${project.name}-${project.version}.jar", "${project.name}-${project.version}.jar")
-	destFile = file("${project.buildDir}/Dockerfile")
-	entryPoint("java")
-	defaultCommand("-jar", "${project.name}-${project.version}.jar")
-}
-
-tasks.register<DockerBuildImage>("buildImage") {
-	dependsOn("createDockerFile")
-
-	inputDir = file("build")
-	tags.add("docker.moscow.alfaintra.net/${project.name}:${project.version}")
-}
-
-tasks.register<DockerPushImage>("dockerPushImage") {
-	imageName = "docker.moscow.alfaintra.net/${project.name}"
-	tag = "${project.version}"
-}
-
-tasks.register("publish") {
-	dependsOn("clean")
-	dependsOn("build")
-	dependsOn("buildImage")
-	dependsOn("dockerPushImage")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
 }
 
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "1.8"
+		jvmTarget = "11"
 	}
+}
+
+tasks.withType<Test> {
+	useJUnitPlatform()
+}
+
+tasks.getByName<BootJar>("bootJar") {
+	layered {
+		enabled = true
+	}
+}
+
+tasks.getByName<BootBuildImage>("bootBuildImage") {
+	//nothing meanwhile
 }

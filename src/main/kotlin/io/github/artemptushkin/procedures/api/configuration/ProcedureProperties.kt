@@ -1,7 +1,7 @@
-package ru.alfabank.testing.configuration
+package io.github.artemptushkin.procedures.api.configuration
 
-import oracle.jdbc.OracleTypes
 import org.springframework.boot.context.properties.ConfigurationProperties
+import java.sql.JDBCType
 
 @ConfigurationProperties("procedures")
 class ProcedureProperties {
@@ -10,16 +10,13 @@ class ProcedureProperties {
 
 class ProcedureProperty {
     lateinit var name: String
+    lateinit var type: Database
     lateinit var parameters: Map<String, ParameterProperty>
 }
 
 class ParameterProperty {
     var required: Boolean = false
     lateinit var procedureKey: String
-    lateinit var type: Type
+    lateinit var type: JDBCType
     var default: String? = null
-}
-
-enum class Type(val oracleType: Int) {
-    VARCHAR(OracleTypes.VARCHAR), NUMBER(OracleTypes.NUMBER), INTEGER(OracleTypes.INTEGER), CHAR(OracleTypes.CHAR)
 }

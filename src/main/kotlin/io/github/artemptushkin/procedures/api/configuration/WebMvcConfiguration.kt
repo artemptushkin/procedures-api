@@ -1,4 +1,4 @@
-package ru.alfabank.testing.configuration
+package io.github.artemptushkin.procedures.api.configuration
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -27,7 +27,7 @@ class WebMvcConfiguration : WebMvcConfigurer {
                             .withoutProcedureColumnMetaDataAccess()
                     procedure.parameters
                             .forEach { (_, parameter) ->
-                                jdbcCall.addDeclaredParameter(SqlParameter(parameter.procedureKey, parameter.type.oracleType)) }
+                                jdbcCall.addDeclaredParameter(SqlParameter(parameter.procedureKey, parameter.type.vendorTypeNumber)) }
 
                     procedure.name to jdbcCall
                 }

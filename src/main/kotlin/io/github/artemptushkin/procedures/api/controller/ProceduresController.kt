@@ -1,13 +1,12 @@
-package ru.alfabank.testing.controller
+package io.github.artemptushkin.procedures.api.controller
 
+import io.github.artemptushkin.procedures.api.domain.ProcedureRequest
+import io.github.artemptushkin.procedures.api.service.ProceduresService
+import io.github.artemptushkin.procedures.api.validation.ProcedureNameConstraint
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import ru.alfabank.testing.domain.ProcedureRequest
-import ru.alfabank.testing.service.ProceduresService
-import ru.alfabank.testing.validation.ProcedureNameConstraint
-import javax.validation.ConstraintViolation
 import javax.validation.ConstraintViolationException
 
 @Validated
@@ -17,7 +16,7 @@ class ProceduresController(val proceduresService : ProceduresService) {
 
     @ResponseStatus(HttpStatus.CREATED)
 
-    @PostMapping(value = ["/{procedureName}/execute"])
+    @PostMapping(value = ["/{procedureName}:execute"])
     fun execute(@ProcedureNameConstraint("procedureName doesn't exist at the properties") @PathVariable procedureName: String,
                 @RequestParam parameters: Map<String, String>) {
         val procedureRequest = ProcedureRequest(procedureName, parameters)

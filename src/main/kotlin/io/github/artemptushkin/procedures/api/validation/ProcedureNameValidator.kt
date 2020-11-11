@@ -1,6 +1,6 @@
-package ru.alfabank.testing.validation
+package io.github.artemptushkin.procedures.api.validation
 
-import ru.alfabank.testing.configuration.ProcedureProperties
+import io.github.artemptushkin.procedures.api.configuration.ProcedureProperties
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 

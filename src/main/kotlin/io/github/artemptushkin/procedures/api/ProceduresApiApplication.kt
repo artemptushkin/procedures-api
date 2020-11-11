@@ -1,11 +1,11 @@
-package ru.alfabank.testing
+package io.github.artemptushkin.procedures.api
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class OcrmProceduresApiApplication
+class ProceduresApiApplication
 
 fun main(args: Array<String>) {
-	runApplication<OcrmProceduresApiApplication>(*args)
+	runApplication<ProceduresApiApplication>(*args)
 }

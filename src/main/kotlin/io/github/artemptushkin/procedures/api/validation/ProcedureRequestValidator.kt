@@ -1,11 +1,10 @@
-package ru.alfabank.testing.validation
+package io.github.artemptushkin.procedures.api.validation
 
-import ru.alfabank.testing.configuration.ProcedureProperties
-import ru.alfabank.testing.configuration.ProcedureProperty
-import ru.alfabank.testing.domain.ProcedureRequest
+import io.github.artemptushkin.procedures.api.configuration.ProcedureProperties
+import io.github.artemptushkin.procedures.api.configuration.ProcedureProperty
+import io.github.artemptushkin.procedures.api.domain.ProcedureRequest
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
-import javax.validation.Validator
 
 class ProcedureRequestValidator(
         private val procedureProperties: ProcedureProperties

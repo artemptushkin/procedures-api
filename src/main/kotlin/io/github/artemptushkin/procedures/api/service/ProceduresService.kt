@@ -1,12 +1,12 @@
-package ru.alfabank.testing.service
+package io.github.artemptushkin.procedures.api.service
 
+import io.github.artemptushkin.procedures.api.configuration.ProcedureProperties
+import io.github.artemptushkin.procedures.api.configuration.ProcedureProperty
+import io.github.artemptushkin.procedures.api.domain.ProcedureRequest
+import io.github.artemptushkin.procedures.api.validation.ProcedureRequestConstraint
 import org.springframework.jdbc.core.simple.SimpleJdbcCall
 import org.springframework.stereotype.Service
 import org.springframework.validation.annotation.Validated
-import ru.alfabank.testing.configuration.ProcedureProperties
-import ru.alfabank.testing.configuration.ProcedureProperty
-import ru.alfabank.testing.domain.ProcedureRequest
-import ru.alfabank.testing.validation.ProcedureRequestConstraint
 
 @Service
 @Validated
@@ -15,7 +15,7 @@ class ProceduresService(
 ) {
 
     fun execute(@ProcedureRequestConstraint("required params don't exist at the properties") procedureRequest: ProcedureRequest) {
-        val procedure: ProcedureProperty = procedureProperties.properties.getValue(procedureRequest.name)
+          val procedure: ProcedureProperty = procedureProperties.properties.getValue(procedureRequest.name)
 
         val jdbcCallParameters = procedure.parameters
                 .entries

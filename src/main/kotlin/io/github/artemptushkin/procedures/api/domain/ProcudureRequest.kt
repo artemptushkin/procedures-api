@@ -1,7 +1,7 @@
-package ru.alfabank.testing.domain
+package io.github.artemptushkin.procedures.api.domain
 
+import io.github.artemptushkin.procedures.api.validation.ProcedureNameConstraint
 import org.springframework.validation.annotation.Validated
-import ru.alfabank.testing.validation.ProcedureNameConstraint
 import javax.validation.Valid
 
 @Validated
