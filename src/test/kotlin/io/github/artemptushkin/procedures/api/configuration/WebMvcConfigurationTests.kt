@@ -11,7 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.sql.JDBCType
 
 @ExtendWith(SpringExtension::class)
-@ActiveProfiles("test-properties")
+@ActiveProfiles("test")
 @ContextConfiguration(classes = [WebMvcConfiguration::class], initializers = [ConfigFileApplicationContextInitializer::class])
 internal class WebMvcConfigurationTests {
 

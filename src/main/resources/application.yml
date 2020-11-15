@@ -1,12 +1,12 @@
 operations:
   dataSource:
     cat-mysql:
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       username: foo
       password: baz
       url: jdbc://mysql
     dog-mysql:
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       username: foo
       password: baz
       url: jdbc://mysql
@@ -19,6 +19,9 @@ operations:
         name:
           key: name
           type: VARCHAR
+        lastName:
+          key: lastName
+          type: VARCHAR
     create-dog:
       sql: |
         INSERT INTO DOG (NAME, LAST_NAME)
@@ -26,4 +29,7 @@ operations:
       parameters:
         name:
           key: name
+          type: VARCHAR
+        lastName:
+          key: lastName
           type: VARCHAR
