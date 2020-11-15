@@ -1,16 +1,29 @@
-procedures:
-  properties:
-    createCats:
-      name: create-cats
-      type: MySQL
+operations:
+  dataSource:
+    cat-mysql:
+      driver-class-name: com.mysql.jdbc.Driver
+      username: foo
+      password: baz
+      url: jdbc://mysql
+    dog-mysql:
+      driver-class-name: com.mysql.jdbc.Driver
+      username: foo
+      password: baz
+      url: jdbc://mysql
+  procedures:
+    create-cat:
+      sql: |
+        INSERT INTO CAT (NAME, LAST_NAME)
+        VALUES :name, :lastName
       parameters:
         name:
-          procedureKey: name
+          key: name
           type: VARCHAR
-    createDogs:
-      name: create-dogs
-      type: PostgreSQL
+    create-dog:
+      sql: |
+        INSERT INTO DOG (NAME, LAST_NAME)
+        VALUES :name, :lastName
       parameters:
         name:
-          procedureKey: name
+          key: name
           type: VARCHAR

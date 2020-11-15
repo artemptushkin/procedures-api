@@ -17,8 +17,8 @@ class ProcedureRequestValidator(
     }
 
     override fun isValid(procedureRequest: ProcedureRequest, context: ConstraintValidatorContext): Boolean {
-        val requestParameters = procedureRequest.requestParameters
-        val procedureProperty: ProcedureProperty = procedureProperties.properties.getValue(procedureRequest.name)
+        val requestParameters = procedureRequest.parameters
+        val procedureProperty: ProcedureProperty = procedureProperties.procedures.getValue(procedureRequest.name)
         return procedureProperty
                 .parameters
                 .filter { it.value.required && requestParameters.contains(it.key) }

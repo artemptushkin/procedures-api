@@ -20,24 +20,20 @@ internal class WebMvcConfigurationTests {
 
     @Test
     fun itInitializesContextWithProperties() {
-        assertThat(procedureProperties.properties).isNotEmpty
+        assertThat(procedureProperties.procedures).isNotEmpty
         
-        assertThat(procedureProperties.properties["createCats"]).isNotNull
-        assertThat(procedureProperties.properties["createCats"]?.type).isSameAs(Database.MySQL)
+        assertThat(procedureProperties.procedures["create-cat"]).isNotNull
 
-        assertThat(procedureProperties.properties["createCats"]?.parameters).isNotEmpty
-        assertThat(procedureProperties.properties["createCats"]?.parameters!!["name"]?.type).isSameAs(JDBCType.VARCHAR)
-        assertThat(procedureProperties.properties["createCats"]?.parameters!!["name"]?.procedureKey).isEqualTo("name")
-        assertThat(procedureProperties.properties["createCats"]?.parameters!!["name"]?.default).isNull()
-        assertThat(procedureProperties.properties["createCats"]?.parameters!!["name"]?.required).isFalse
+        assertThat(procedureProperties.procedures["create-cat"]?.parameters).isNotEmpty
+        assertThat(procedureProperties.procedures["create-cat"]?.parameters!!["name"]?.type).isSameAs(JDBCType.VARCHAR)
+        assertThat(procedureProperties.procedures["create-cat"]?.parameters!!["name"]?.default).isNull()
+        assertThat(procedureProperties.procedures["create-cat"]?.parameters!!["name"]?.required).isFalse
 
-        assertThat(procedureProperties.properties["createDogs"]).isNotNull
-        assertThat(procedureProperties.properties["createDogs"]?.type).isSameAs(Database.PostgreSQL)
-        
-        assertThat(procedureProperties.properties["createDogs"]?.parameters).isNotEmpty
-        assertThat(procedureProperties.properties["createDogs"]?.parameters!!["name"]?.type).isSameAs(JDBCType.VARCHAR)
-        assertThat(procedureProperties.properties["createDogs"]?.parameters!!["name"]?.procedureKey).isEqualTo("name")
-        assertThat(procedureProperties.properties["createDogs"]?.parameters!!["name"]?.default).isNull()
-        assertThat(procedureProperties.properties["createDogs"]?.parameters!!["name"]?.required).isFalse
+        assertThat(procedureProperties.procedures["create-dog"]).isNotNull
+
+        assertThat(procedureProperties.procedures["create-dog"]?.parameters).isNotEmpty
+        assertThat(procedureProperties.procedures["create-dog"]?.parameters!!["name"]?.type).isSameAs(JDBCType.VARCHAR)
+        assertThat(procedureProperties.procedures["create-dog"]?.parameters!!["name"]?.default).isNull()
+        assertThat(procedureProperties.procedures["create-dog"]?.parameters!!["name"]?.required).isFalse
     }
 }

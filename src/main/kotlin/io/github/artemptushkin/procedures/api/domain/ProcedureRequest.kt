@@ -9,5 +9,5 @@ data class ProcedureRequest(
         @Valid
         @ProcedureNameConstraint(message = "invalid procedure name")
         val name: String,
-        val requestParameters: Map<String, String>
+        val parameters: Map<String, Any>
 )

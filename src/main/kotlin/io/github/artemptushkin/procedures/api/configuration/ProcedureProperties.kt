@@ -1,22 +1,37 @@
 package io.github.artemptushkin.procedures.api.configuration
 
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
 import org.springframework.boot.context.properties.ConfigurationProperties
 import java.sql.JDBCType
 
-@ConfigurationProperties("procedures")
+@ConfigurationProperties("operations")
 class ProcedureProperties {
-    lateinit var properties: Map<String, ProcedureProperty>
+    lateinit var tables: Map<String, ProcedureProperty>
+    lateinit var procedures: Map<String, ProcedureProperty>
+    lateinit var dataSource: Map<String, DataSourceProperties>
+}
+
+class TableProperty {
+    lateinit var sql: String
+    lateinit var fields: Map<String, FieldProperty>
+}
+
+class FieldProperty {
+    var required: Boolean = false
+    lateinit var name: String
+    lateinit var type: JDBCType
+    var default: String? = null
 }
 
 class ProcedureProperty {
     lateinit var name: String
-    lateinit var type: Database
+    lateinit var sql: String
     lateinit var parameters: Map<String, ParameterProperty>
 }
 
 class ParameterProperty {
     var required: Boolean = false
-    lateinit var procedureKey: String
+    lateinit var key: String
     lateinit var type: JDBCType
     var default: String? = null
 }

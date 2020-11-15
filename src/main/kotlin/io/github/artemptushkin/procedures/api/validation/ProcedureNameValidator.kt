@@ -15,6 +15,6 @@ class ProcedureNameValidator(private val procedureProperties: ProcedurePropertie
 
     override fun isValid(procedureName: String?, constraintValidatorContext: ConstraintValidatorContext): Boolean {
         if (procedureName == null) return acceptNull
-        return procedureProperties.properties.containsKey(procedureName)
+        return procedureProperties.procedures.containsKey(procedureName)
     }
 }

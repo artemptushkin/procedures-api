@@ -1,6 +1,7 @@
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 buildscript {
 	repositories {
@@ -12,6 +13,8 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
 	id("org.jetbrains.kotlin.jvm") version "1.4.20-RC"
 	id("org.jetbrains.kotlin.plugin.spring") version "1.4.20-RC"
+	/* org.jetbrains.kotlin.kapt was added due to generate configuration properties metadata */
+	id("org.jetbrains.kotlin.kapt") version "1.4.20-RC"
 }
 
 group = "io.github.artemptushkin.procedures.api"
@@ -28,6 +31,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	kapt("org.springframework.boot:spring-boot-configuration-processor")
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
@@ -56,5 +61,5 @@ tasks.getByName<BootJar>("bootJar") {
 }
 
 tasks.getByName<BootBuildImage>("bootBuildImage") {
-	//nothing meanwhile
+	imageName = "${project.name}:${project.version}"
 }
