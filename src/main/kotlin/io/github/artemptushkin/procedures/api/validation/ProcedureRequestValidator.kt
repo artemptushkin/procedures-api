@@ -16,13 +16,15 @@ class ProcedureRequestValidator(
         acceptNull = constraintAnnotation.acceptNull
     }
 
-    override fun isValid(procedureRequest: ProcedureRequest, context: ConstraintValidatorContext): Boolean {
+    override fun isValid(procedureRequest: ProcedureRequest?, context: ConstraintValidatorContext): Boolean {
+        if (procedureRequest == null) return acceptNull
+
         val requestParameters = procedureRequest.parameters
         val procedureProperty: ProcedureProperty = procedureProperties.procedures.getValue(procedureRequest.name)
-        return procedureProperty
+        return procedureProperty.parameters.isEmpty() || procedureProperty
                 .parameters
                 .none {
-                    it.value.required && requestParameters.contains(it.key)
+                    it.value.required && !requestParameters.contains(it.key)
                 }
     }
 }

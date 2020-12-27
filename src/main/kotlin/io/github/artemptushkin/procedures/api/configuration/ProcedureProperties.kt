@@ -15,6 +15,16 @@ class ProcedureProperty {
     lateinit var name: String
     lateinit var sql: String
     lateinit var parameters: Map<String, ParameterProperty>
+
+    companion object {
+        fun from(name: String, sql: String, parameters: Map<String, ParameterProperty>) : ProcedureProperty {
+            val property = ProcedureProperty()
+            property.name = name
+            property.sql = sql
+            property.parameters = parameters
+            return property
+        }
+    }
 }
 
 class ParameterProperty {
@@ -22,4 +32,15 @@ class ParameterProperty {
     lateinit var key: String
     lateinit var type: JDBCType
     var default: String? = null
+
+    companion object {
+        fun from(required: Boolean, key: String, type: JDBCType, default: String? = null) : ParameterProperty {
+            val property = ParameterProperty()
+            property.required = required
+            property.key = key
+            property.type = type
+            property.default = default
+            return property
+        }
+    }
 }

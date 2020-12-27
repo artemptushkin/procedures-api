@@ -31,19 +31,23 @@ class MultipleDataSourceConfiguration {
                     val dataSourceInitializer = DataSourceInitializer()
                     val resourceDatabasePopulator = prepareDatabasePopulator(applicationContext, it.value)
                     val jdbcTemplate = NamedParameterJdbcTemplate(dataSource)
-                    var applicationProceduresService = ApplicationProceduresService(jdbcTemplate, procedureProperties = procedureProperties)
+                    val applicationProceduresService = ApplicationProceduresService(jdbcTemplate, procedureProperties = procedureProperties)
 
                     dataSourceInitializer.setDataSource(dataSource)
                     dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator)
 
-                    beanFactory.initializeBean(dataSource, it.key.getDataSourceBeanName())
-                    beanFactory.initializeBean(dataSourceInitializer, it.key.getDataSourceInitializerBeanName())
-                    beanFactory.initializeBean(jdbcTemplate, it.key.getJdbcTemplateBeanName())
+                    initAndRegisterBean(dataSource, it.key.getDataSourceBeanName(), beanFactory)
+                    initAndRegisterBean(dataSourceInitializer, it.key.getDataSourceInitializerBeanName(), beanFactory)
+                    initAndRegisterBean(jdbcTemplate, it.key.getJdbcTemplateBeanName(), beanFactory)
+                    initAndRegisterBean(applicationProceduresService, it.key, beanFactory)
 
-                    applicationProceduresService = beanFactory.initializeBean(applicationProceduresService, it.key) as ApplicationProceduresService
-                    beanFactory.registerSingleton(it.key, applicationProceduresService)
                     it.key to applicationProceduresService
                 }
+    }
+
+    private fun initAndRegisterBean(bean: Any, name: String, beanFactory: DefaultListableBeanFactory) {
+        val initializedBean = beanFactory.initializeBean(bean, name)
+        beanFactory.registerSingleton(name, initializedBean)
     }
 
     private fun prepareDatabasePopulator(applicationContext: ApplicationContext, dataSourceProperties: DataSourceProperties): ResourceDatabasePopulator {
