@@ -10,6 +10,11 @@ operations:
       username: sa
       url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
       schema: classpath:test-dog-schema.sql
+    #sample for tests to verify it doesn't fail on missing schema
+    tortoise-h2:
+      driver-class-name: org.h2.Driver
+      username: sa
+      url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
   procedures:
     create-cat:
       sql: |
