@@ -12,8 +12,8 @@ import java.sql.JDBCType
 
 @ExtendWith(SpringExtension::class)
 @ActiveProfiles("test")
-@ContextConfiguration(classes = [WebMvcConfiguration::class], initializers = [ConfigFileApplicationContextInitializer::class])
-internal class WebMvcConfigurationTests {
+@ContextConfiguration(classes = [MultipleDataSourceConfiguration::class], initializers = [ConfigFileApplicationContextInitializer::class])
+internal class MultipleDataSourceConfigurationTests {
 
     @Autowired
     lateinit var procedureProperties: ProcedureProperties

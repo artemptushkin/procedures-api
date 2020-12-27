@@ -11,18 +11,6 @@ class ProcedureProperties {
     lateinit var dataSource: Map<String, DataSourceProperties>
 }
 
-class TableProperty {
-    lateinit var sql: String
-    lateinit var fields: Map<String, FieldProperty>
-}
-
-class FieldProperty {
-    var required: Boolean = false
-    lateinit var name: String
-    lateinit var type: JDBCType
-    var default: String? = null
-}
-
 class ProcedureProperty {
     lateinit var name: String
     lateinit var sql: String

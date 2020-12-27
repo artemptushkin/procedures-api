@@ -21,7 +21,8 @@ class ProcedureRequestValidator(
         val procedureProperty: ProcedureProperty = procedureProperties.procedures.getValue(procedureRequest.name)
         return procedureProperty
                 .parameters
-                .filter { it.value.required && requestParameters.contains(it.key) }
-                .any()
+                .none {
+                    it.value.required && requestParameters.contains(it.key)
+                }
     }
 }
