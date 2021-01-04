@@ -16,34 +16,36 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.datasource.init.DataSourceInitializer
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator
 
-
 @Configuration
 @AutoConfigureAfter(value = [ConfigurationPropertiesAutoConfiguration::class])
 @EnableConfigurationProperties(value = [ProcedureProperties::class])
 class MultipleDataSourceConfiguration {
 
     @Bean
-    fun datasourceServices(procedureProperties: ProcedureProperties, applicationContext: ApplicationContext): Map<String, ApplicationProceduresService> {
+    fun datasourceServices(
+        procedureProperties: ProcedureProperties,
+        applicationContext: ApplicationContext
+    ): Map<String, ApplicationProceduresService> {
         val beanFactory = applicationContext.autowireCapableBeanFactory as DefaultListableBeanFactory
         procedureProperties.dataSource
-                .entries
-                .forEach {
-                    val dataSource = createHikariDataSource(it.value)
-                    val dataSourceInitializer = DataSourceInitializer()
-                    val resourceDatabasePopulator = prepareDatabasePopulator(applicationContext, it.value)
-                    val jdbcTemplate = NamedParameterJdbcTemplate(dataSource)
-                    val applicationProceduresService = ApplicationProceduresService(jdbcTemplate, procedureProperties)
+            .entries
+            .forEach {
+                val dataSource = createHikariDataSource(it.value)
+                val dataSourceInitializer = DataSourceInitializer()
+                val resourceDatabasePopulator = prepareDatabasePopulator(applicationContext, it.value)
+                val jdbcTemplate = NamedParameterJdbcTemplate(dataSource)
+                val applicationProceduresService = ApplicationProceduresService(jdbcTemplate, procedureProperties)
 
-                    dataSourceInitializer.setDataSource(dataSource)
-                    dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator)
+                dataSourceInitializer.setDataSource(dataSource)
+                dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator)
 
-                    initAndRegisterBean(dataSource, it.key.getDataSourceBeanName(), beanFactory)
-                    initAndRegisterBean(dataSourceInitializer, it.key.getDataSourceInitializerBeanName(), beanFactory)
-                    initAndRegisterBean(jdbcTemplate, it.key.getJdbcTemplateBeanName(), beanFactory)
-                    initAndRegisterBean(applicationProceduresService, it.key, beanFactory)
+                initAndRegisterBean(dataSource, it.key.getDataSourceBeanName(), beanFactory)
+                initAndRegisterBean(dataSourceInitializer, it.key.getDataSourceInitializerBeanName(), beanFactory)
+                initAndRegisterBean(jdbcTemplate, it.key.getJdbcTemplateBeanName(), beanFactory)
+                initAndRegisterBean(applicationProceduresService, it.key, beanFactory)
 
-                    it.key to applicationProceduresService
-                }
+                it.key to applicationProceduresService
+            }
         /* In order to get beans and not these objects of type ApplicationProceduresService we have to access it from the application context*/
         return applicationContext.getBeansOfType(ApplicationProceduresService::class.java)
     }
@@ -53,10 +55,17 @@ class MultipleDataSourceConfiguration {
         beanFactory.registerSingleton(name, initializedBean)
     }
 
-    private fun prepareDatabasePopulator(applicationContext: ApplicationContext, dataSourceProperties: DataSourceProperties): ResourceDatabasePopulator {
+    private fun prepareDatabasePopulator(
+        applicationContext: ApplicationContext,
+        dataSourceProperties: DataSourceProperties
+    ): ResourceDatabasePopulator {
         val resourceDatabasePopulator = ResourceDatabasePopulator()
         dataSourceProperties.schema?.forEach { location ->
-            doGetResources(applicationContext, location).forEach { resource -> resourceDatabasePopulator.addScript(resource) }
+            doGetResources(applicationContext, location).forEach { resource ->
+                resourceDatabasePopulator.addScript(
+                    resource
+                )
+            }
         }
         return resourceDatabasePopulator
     }
@@ -75,5 +84,5 @@ class MultipleDataSourceConfiguration {
     }
 
     private fun createHikariDataSource(dataSourceProperties: DataSourceProperties) =
-            dataSourceProperties.initializeDataSourceBuilder().type(HikariDataSource::class.java).build()
+        dataSourceProperties.initializeDataSourceBuilder().type(HikariDataSource::class.java).build()
 }

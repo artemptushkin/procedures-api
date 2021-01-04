@@ -18,26 +18,28 @@ import javax.validation.ConstraintViolationException
 class ProceduresController(private val datasourceServices: Map<String, ApplicationProceduresService>) {
 
     @PostMapping("/{datasource}/{procedureName}")
-    fun execute(@DatasourceNameConstraint @PathVariable datasource: String,
-               @ProcedureNameConstraint @PathVariable procedureName: String, @RequestBody requestBody: Map<String, Any>) {
+    fun execute(
+        @DatasourceNameConstraint @PathVariable datasource: String,
+        @ProcedureNameConstraint @PathVariable procedureName: String, @RequestBody requestBody: Map<String, Any>
+    ) {
         datasourceServices
-                .getValue(datasource)
-                .update(ProcedureRequest(procedureName, requestBody))
+            .getValue(datasource)
+            .update(ProcedureRequest(procedureName, requestBody))
     }
 
     @ExceptionHandler(ConstraintViolationException::class)
     fun handleInvalidRequest(exception: ConstraintViolationException): ResponseEntity<ErrorResponse> {
         return ResponseEntity(
-                ErrorResponse(exception.localizedMessage),
-                HttpStatus.BAD_REQUEST
+            ErrorResponse(exception.localizedMessage),
+            HttpStatus.BAD_REQUEST
         )
     }
 
     @ExceptionHandler(HttpMessageNotReadableException::class)
     fun handleNotReadableMessage(exception: HttpMessageNotReadableException): ResponseEntity<ErrorResponse> {
         return ResponseEntity(
-                ErrorResponse(exception.localizedMessage),
-                HttpStatus.BAD_REQUEST
+            ErrorResponse(exception.localizedMessage),
+            HttpStatus.BAD_REQUEST
         )
     }
 }

@@ -16,7 +16,7 @@ class ProcedureProperty {
     lateinit var parameters: Map<String, ParameterProperty>
 
     companion object {
-        fun from(name: String, sql: String, parameters: Map<String, ParameterProperty>) : ProcedureProperty {
+        fun from(name: String, sql: String, parameters: Map<String, ParameterProperty>): ProcedureProperty {
             val property = ProcedureProperty()
             property.name = name
             property.sql = sql
@@ -33,7 +33,7 @@ class ParameterProperty {
     var default: String? = null
 
     companion object {
-        fun from(required: Boolean, key: String, type: JDBCType, default: String? = null) : ParameterProperty {
+        fun from(required: Boolean, key: String, type: JDBCType, default: String? = null): ParameterProperty {
             val property = ParameterProperty()
             property.required = required
             property.key = key

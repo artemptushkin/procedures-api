@@ -5,8 +5,8 @@ import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintVa
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
-class ProcedureNameValidator(private val procedureProperties: ProcedureProperties)
-    : ConstraintValidator<ProcedureNameConstraint, String> {
+class ProcedureNameValidator(private val procedureProperties: ProcedureProperties) :
+    ConstraintValidator<ProcedureNameConstraint, String> {
 
     private var acceptNull: Boolean = false
 

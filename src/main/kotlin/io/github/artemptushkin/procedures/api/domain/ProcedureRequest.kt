@@ -6,8 +6,8 @@ import javax.validation.Valid
 
 @Validated
 data class ProcedureRequest(
-        @Valid
-        @ProcedureNameConstraint(message = "invalid procedure name")
-        val name: String,
-        val parameters: Map<String, Any>
+    @Valid
+    @ProcedureNameConstraint(message = "invalid procedure name")
+    val name: String,
+    val parameters: Map<String, Any>
 )

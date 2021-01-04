@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class ProceduresApiApplication
 
 fun main(args: Array<String>) {
-	runApplication<ProceduresApiApplication>(*args)
+    runApplication<ProceduresApiApplication>(*args)
 }

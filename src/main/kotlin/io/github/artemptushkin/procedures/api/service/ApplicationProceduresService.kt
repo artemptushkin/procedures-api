@@ -11,21 +11,23 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.validation.annotation.Validated
 
 @Validated
-class ApplicationProceduresService(private val jdbcTemplate: NamedParameterJdbcTemplate,
-                                   private val procedureProperties: ProcedureProperties) {
+class ApplicationProceduresService(
+    private val jdbcTemplate: NamedParameterJdbcTemplate,
+    private val procedureProperties: ProcedureProperties
+) {
 
     fun update(@ProcedureRequestConstraint procedureRequest: ProcedureRequest) {
         val procedure: ProcedureProperty = procedureProperties.procedures.getValue(procedureRequest.name)
 
         val jdbcCallParameters = procedure.parameters
-                .entries
-                .associate {
-                    val parameterKey = it.key
-                    val procedureParameter = it.value
-                    val parameterValue = procedureRequest.parameters.getOrDefault(parameterKey, procedureParameter.default)
-                    val sqlParameter = SqlParameter(procedureParameter.key, procedureParameter.type.vendorTypeNumber)
-                    procedureParameter.key to SqlParameterValue(sqlParameter, parameterValue)
-                }
+            .entries
+            .associate {
+                val parameterKey = it.key
+                val procedureParameter = it.value
+                val parameterValue = procedureRequest.parameters.getOrDefault(parameterKey, procedureParameter.default)
+                val sqlParameter = SqlParameter(procedureParameter.key, procedureParameter.type.vendorTypeNumber)
+                procedureParameter.key to SqlParameterValue(sqlParameter, parameterValue)
+            }
 
         jdbcTemplate.update(procedure.sql, MapSqlParameterSource(jdbcCallParameters))
     }
