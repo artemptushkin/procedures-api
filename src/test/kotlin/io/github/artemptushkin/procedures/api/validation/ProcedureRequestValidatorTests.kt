@@ -5,6 +5,7 @@ import io.github.artemptushkin.procedures.api.configuration.ProcedureProperties
 import io.github.artemptushkin.procedures.api.configuration.ProcedureProperty
 import io.github.artemptushkin.procedures.api.domain.ProcedureRequest
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
+import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
@@ -19,7 +20,7 @@ internal class ProcedureRequestValidatorTests {
     @Test
     fun itReturnsFalseOnMissingRequiredProperty() {
         val request = prepareRequestWithoutRequired()
-        val context = mock(ConstraintValidatorContext::class.java)
+        val context = mock(ConstraintValidatorContextImpl::class.java)
 
         procedureProperties = prepareProperties()
         victim = ProcedureRequestValidator(procedureProperties)
@@ -30,7 +31,7 @@ internal class ProcedureRequestValidatorTests {
     @Test
     fun itReturnsTrueOnAllParametersExist() {
         val request = prepareRequest()
-        val context = mock(ConstraintValidatorContext::class.java)
+        val context = mock(ConstraintValidatorContextImpl::class.java)
 
         procedureProperties = prepareProperties()
         victim = ProcedureRequestValidator(procedureProperties)
@@ -41,7 +42,7 @@ internal class ProcedureRequestValidatorTests {
     @Test
     fun itReturnsTrueOnEmptyPropertiesParameters() {
         val request = prepareRequestWithoutParameter()
-        val context = mock(ConstraintValidatorContext::class.java)
+        val context = mock(ConstraintValidatorContextImpl::class.java)
 
         procedureProperties = preparePropertiesWithEmptyParameters()
         victim = ProcedureRequestValidator(procedureProperties)
@@ -51,7 +52,7 @@ internal class ProcedureRequestValidatorTests {
 
     @Test
     fun itAcceptsNullBasedOnAnnotation() {
-        val context = mock(ConstraintValidatorContext::class.java)
+        val context = mock(ConstraintValidatorContextImpl::class.java)
         val expected = true
         val procedureRequestConstraint = prepareAnnotation(acceptNull = expected)
 
