@@ -11,7 +11,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -34,6 +34,10 @@ internal class ProceduresControllerValidationsTests {
                         )
         ).andExpect(
                 status().isBadRequest
+        ).andExpect(
+                header().string("Content-Type", "application/json")
+        ).andExpect (
+                jsonPath("").value("")
         )
     }
 }

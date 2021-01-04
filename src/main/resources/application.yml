@@ -1,0 +1,45 @@
+operations:
+  dataSource:
+    cat-h2:
+      driver-class-name: org.h2.Driver
+      username: sa
+      url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+      schema: classpath:test-cat-schema.sql
+    dog-h2:
+      driver-class-name: org.h2.Driver
+      username: sa
+      url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+      schema: classpath:test-dog-schema.sql
+    #sample for tests to verify it doesn't fail on missing schema
+    tortoise-h2:
+      driver-class-name: org.h2.Driver
+      username: sa
+      url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+  procedures:
+    create-cat:
+      sql: |
+        INSERT INTO CAT (NAME, LAST_NAME) VALUES (:name, :lastName)
+      parameters:
+        name:
+          key: name
+          type: VARCHAR
+        lastName:
+          key: lastName
+          type: VARCHAR
+    create-dog:
+      sql: |
+        INSERT INTO DOG (NAME, LAST_NAME) VALUES (:name, :lastName)
+      parameters:
+        name:
+          key: name
+          required: true
+          type: VARCHAR
+        lastName:
+          key: lastName
+          type: VARCHAR
+spring:
+  h2:
+    console:
+      enabled: true
+server:
+  port: 8080

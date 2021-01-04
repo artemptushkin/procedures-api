@@ -16,7 +16,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.datasource.init.DataSourceInitializer
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator
 
-@Configuration(proxyBeanMethods = false)
+
+@Configuration
 @AutoConfigureAfter(value = [ConfigurationPropertiesAutoConfiguration::class])
 @EnableConfigurationProperties(value = [ProcedureProperties::class])
 class MultipleDataSourceConfiguration {
@@ -24,14 +25,14 @@ class MultipleDataSourceConfiguration {
     @Bean
     fun datasourceServices(procedureProperties: ProcedureProperties, applicationContext: ApplicationContext): Map<String, ApplicationProceduresService> {
         val beanFactory = applicationContext.autowireCapableBeanFactory as DefaultListableBeanFactory
-        return procedureProperties.dataSource
+        procedureProperties.dataSource
                 .entries
-                .associate {
+                .forEach {
                     val dataSource = createHikariDataSource(it.value)
                     val dataSourceInitializer = DataSourceInitializer()
                     val resourceDatabasePopulator = prepareDatabasePopulator(applicationContext, it.value)
                     val jdbcTemplate = NamedParameterJdbcTemplate(dataSource)
-                    val applicationProceduresService = ApplicationProceduresService(jdbcTemplate, procedureProperties = procedureProperties)
+                    val applicationProceduresService = ApplicationProceduresService(jdbcTemplate, procedureProperties)
 
                     dataSourceInitializer.setDataSource(dataSource)
                     dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator)
@@ -43,6 +44,8 @@ class MultipleDataSourceConfiguration {
 
                     it.key to applicationProceduresService
                 }
+        /* In order to get beans and not these objects of type ApplicationProceduresService we have to access it from the application context*/
+        return applicationContext.getBeansOfType(ApplicationProceduresService::class.java)
     }
 
     private fun initAndRegisterBean(bean: Any, name: String, beanFactory: DefaultListableBeanFactory) {

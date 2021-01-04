@@ -38,10 +38,10 @@ dependencies {
 
 	implementation("org.postgresql:postgresql:42.2.18")
 	implementation("mysql:mysql-connector-java:8.0.22")
+	implementation("com.h2database:h2")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
-	testImplementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
