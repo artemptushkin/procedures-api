@@ -5,9 +5,11 @@ import io.github.artemptushkin.procedures.api.configuration.ProcedureProperty
 import io.github.artemptushkin.procedures.api.domain.ProcedureRequest
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
+import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl
+
 
 class ProcedureRequestValidator(
-        private val procedureProperties: ProcedureProperties
+    private val procedureProperties: ProcedureProperties
 ) : ConstraintValidator<ProcedureRequestConstraint, ProcedureRequest> {
 
     private var acceptNull: Boolean = false
@@ -21,10 +23,16 @@ class ProcedureRequestValidator(
 
         val requestParameters = procedureRequest.parameters
         val procedureProperty: ProcedureProperty = procedureProperties.procedures.getValue(procedureRequest.name)
-        return procedureProperty.parameters.isEmpty() || procedureProperty
-                .parameters
-                .none {
-                    it.value.required && !requestParameters.contains(it.key)
-                }
+        val missedRequiredParameters = procedureProperty
+            .parameters
+            .filter {
+                it.value.required && !requestParameters.contains(it.key)
+            }
+
+        if (missedRequiredParameters.isNotEmpty()) {
+            (context as ConstraintValidatorContextImpl)
+                .addMessageParameter("parameters", missedRequiredParameters.map { it.key }.toString())
+        }
+        return missedRequiredParameters.isEmpty()
     }
 }

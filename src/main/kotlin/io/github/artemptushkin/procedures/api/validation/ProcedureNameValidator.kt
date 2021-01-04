@@ -1,6 +1,7 @@
 package io.github.artemptushkin.procedures.api.validation
 
 import io.github.artemptushkin.procedures.api.configuration.ProcedureProperties
+import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
@@ -13,7 +14,7 @@ class ProcedureNameValidator(private val procedureProperties: ProcedurePropertie
         acceptNull = constraintAnnotation.acceptNull
     }
 
-    override fun isValid(procedureName: String?, constraintValidatorContext: ConstraintValidatorContext): Boolean {
+    override fun isValid(procedureName: String?, context: ConstraintValidatorContext): Boolean {
         if (procedureName == null) return acceptNull
         return procedureProperties.procedures.containsKey(procedureName)
     }

@@ -6,7 +6,6 @@ import java.sql.JDBCType
 
 @ConfigurationProperties("operations")
 class ProcedureProperties {
-    lateinit var tables: Map<String, ProcedureProperty>
     lateinit var procedures: Map<String, ProcedureProperty>
     lateinit var dataSource: Map<String, DataSourceProperties>
 }
