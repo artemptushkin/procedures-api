@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: cloud-procedures-api
+  cloud:
+    config:
+      uri: ${SPRING_CLOUD_CONFIG_URI:http://localhost:8888}
+      fail-fast: true
+  profiles:
+    active: cloud
+server:
+  port: 8080

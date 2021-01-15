@@ -38,3 +38,5 @@ Or use Intellij Idea Run configurations from the [run directory](.run) for Idea 
 1. Would be interesting to see SQL execution check mechanism, i.e. put something to the properties and check it after the execution.
 2. Spring Cloud Config Server and Spring Cloud eureka configurable integration
 3. Documentation on application properties
+4. Logging of database queries
+5. Kubernetes setup

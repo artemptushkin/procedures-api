@@ -21,8 +21,18 @@ group = "io.github.artemptushkin.procedures.api"
 version = "0.0.4-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
+extra["springCloudVersion"] = "2020.0.0-M6"
+
 repositories {
 	mavenCentral()
+	maven { url = uri("https://repo.spring.io/snapshot") }
+	maven { url = uri("https://repo.spring.io/milestone") }
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+	}
 }
 
 dependencies {
@@ -31,6 +41,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.cloud:spring-cloud-starter-config")
+	/**  spring-cloud-starter-bootstrap is needed since 2.4.0, see for more https://github.com/spring-projects/spring-boot/issues/24216 */
+	implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
 	kapt("org.springframework.boot:spring-boot-configuration-processor")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
