@@ -40,3 +40,4 @@ Or use Intellij Idea Run configurations from the [run directory](.run) for Idea 
 3. Documentation on application properties
 4. Logging of database queries
 5. Kubernetes setup
+6. integration test sourceSet

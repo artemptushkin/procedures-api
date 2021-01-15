@@ -1,11 +1,12 @@
 package io.github.artemptushkin.procedures.api.configuration
 
+import io.github.artemptushkin.procedures.api.helper.TestConfig
 import io.github.artemptushkin.procedures.api.service.ApplicationProceduresService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer
+import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer
 import org.springframework.context.ApplicationContext
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.datasource.init.DataSourceInitializer
@@ -16,8 +17,8 @@ import java.sql.JDBCType
 import javax.sql.DataSource
 
 @ExtendWith(SpringExtension::class)
-@ActiveProfiles("test")
-@ContextConfiguration(classes = [MultipleDataSourceConfiguration::class], initializers = [ConfigFileApplicationContextInitializer::class])
+@ActiveProfiles("config")
+@ContextConfiguration(classes = [MultipleDataSourceConfiguration::class, TestConfig::class], initializers = [ConfigDataApplicationContextInitializer::class])
 internal class MultipleDataSourceConfigurationTests {
 
     @Autowired

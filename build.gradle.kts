@@ -55,6 +55,7 @@ dependencies {
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
+	testImplementation("com.playtika.testcontainers:embedded-postgresql:1.89")
 }
 
 tasks.withType<KotlinCompile> {
@@ -66,6 +67,10 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.create("postgreSQLTest", Test::class.java) {
+	systemProperty("spring.profiles.active", "postgresql")
 }
 
 tasks.getByName<BootJar>("bootJar") {

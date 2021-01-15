@@ -3,8 +3,6 @@ package io.github.artemptushkin.procedures.api.configuration
 import com.zaxxer.hikari.HikariDataSource
 import io.github.artemptushkin.procedures.api.service.ApplicationProceduresService
 import org.springframework.beans.factory.support.DefaultListableBeanFactory
-import org.springframework.boot.autoconfigure.AutoConfigureAfter
-import org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationContext
@@ -17,7 +15,6 @@ import org.springframework.jdbc.datasource.init.DataSourceInitializer
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator
 
 @Configuration
-@AutoConfigureAfter(value = [ConfigurationPropertiesAutoConfiguration::class])
 @EnableConfigurationProperties(value = [ProcedureProperties::class])
 class MultipleDataSourceConfiguration {
 
