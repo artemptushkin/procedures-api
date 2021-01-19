@@ -1,6 +1,5 @@
 package io.github.artemptushkin.procedures.api.configuration
 
-import io.github.artemptushkin.procedures.api.helper.TestConfig
 import io.github.artemptushkin.procedures.api.service.ApplicationProceduresService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -18,7 +17,7 @@ import javax.sql.DataSource
 
 @ExtendWith(SpringExtension::class)
 @ActiveProfiles("config")
-@ContextConfiguration(classes = [MultipleDataSourceConfiguration::class, TestConfig::class], initializers = [ConfigDataApplicationContextInitializer::class])
+@ContextConfiguration(classes = [MultipleDataSourceConfiguration::class], initializers = [ConfigDataApplicationContextInitializer::class])
 internal class MultipleDataSourceConfigurationTests {
 
     @Autowired

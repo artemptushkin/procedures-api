@@ -2,7 +2,7 @@ package io.github.artemptushkin.procedures.api.controller
 
 import io.github.artemptushkin.procedures.api.configuration.getJdbcTemplateBeanName
 import io.github.artemptushkin.procedures.api.helper.json
-import org.assertj.core.api.AssertionsForClassTypes.assertThat
+import org.assertj.core.api.AssertionsForClassTypes
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,17 +10,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.ApplicationContext
 import org.springframework.http.MediaType
-import org.springframework.jdbc.core.PreparedStatementCallback
-import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
-import org.springframework.jdbc.core.namedparam.SqlParameterSource
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.testcontainers.containers.PostgreSQLContainer
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
@@ -36,7 +32,7 @@ internal class ProceduresControllerTests {
     @Test
     fun itExecutesCreatingCats() {
         mockMvc.perform(
-            post("/procedures/cat-h2/create-cat")
+            MockMvcRequestBuilders.post("/procedures/cat-h2/create-cat")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     mapOf(
@@ -45,7 +41,7 @@ internal class ProceduresControllerTests {
                     ).json()
                 )
         ).andExpect(
-            status().isOk
+            MockMvcResultMatchers.status().isOk
         )
 
         val cat = getJdbcTemplateByKey("cat-h2")
@@ -59,15 +55,15 @@ internal class ProceduresControllerTests {
                 }
             )
 
-        assertThat(cat).isNotNull
-        assertThat(cat!!.name).isEqualTo("John")
-        assertThat(cat.lastName).isEqualTo("Taylor")
+        AssertionsForClassTypes.assertThat(cat).isNotNull
+        AssertionsForClassTypes.assertThat(cat!!.name).isEqualTo("John")
+        AssertionsForClassTypes.assertThat(cat.lastName).isEqualTo("Taylor")
     }
 
     @Test
     fun itExecutesCreatingDogs() {
         mockMvc.perform(
-            post("/procedures/dog-h2/create-dog")
+            MockMvcRequestBuilders.post("/procedures/dog-h2/create-dog")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     mapOf(
@@ -76,7 +72,7 @@ internal class ProceduresControllerTests {
                     ).json()
                 )
         ).andExpect(
-            status().isOk
+            MockMvcResultMatchers.status().isOk
         )
 
         val dog = getJdbcTemplateByKey("dog-h2")
@@ -90,9 +86,9 @@ internal class ProceduresControllerTests {
                 }
             )
 
-        assertThat(dog).isNotNull
-        assertThat(dog!!.name).isEqualTo("John")
-        assertThat(dog.lastName).isEqualTo("Taylor")
+        AssertionsForClassTypes.assertThat(dog).isNotNull
+        AssertionsForClassTypes.assertThat(dog!!.name).isEqualTo("John")
+        AssertionsForClassTypes.assertThat(dog.lastName).isEqualTo("Taylor")
     }
 
     class Cat(val id: Long, val name: String, val lastName: String)

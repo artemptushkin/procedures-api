@@ -29,6 +29,21 @@ repositories {
 	maven { url = uri("https://repo.spring.io/milestone") }
 }
 
+sourceSets {
+	create("integrationTest") {
+		java.srcDir("src/integrationTest/kotlin")
+		resources.srcDir("src/integrationTest/resources")
+		compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
+		runtimeClasspath += output + compileClasspath + sourceSets["test"].runtimeClasspath
+	}
+}
+
+configurations["integrationTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
+
+val integrationTestImplementation by configurations.getting {
+	extendsFrom(configurations.testImplementation.get())
+}
+
 dependencyManagement {
 	imports {
 		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
@@ -53,9 +68,12 @@ dependencies {
 	implementation("mysql:mysql-connector-java:8.0.22")
 	implementation("com.h2database:h2")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
-	testImplementation("com.playtika.testcontainers:embedded-postgresql:1.89")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	integrationTestImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
+	integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
+	integrationTestImplementation("com.playtika.testcontainers:embedded-postgresql:1.89")
 }
 
 tasks.withType<KotlinCompile> {
@@ -69,8 +87,15 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-tasks.create("postgreSQLTest", Test::class.java) {
-	systemProperty("spring.profiles.active", "postgresql")
+task<Test>("integrationTest") {
+	description = "Runs the integration tests"
+	group = "verification"
+	testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+	classpath = sourceSets["integrationTest"].runtimeClasspath
+
+	useJUnitPlatform()
+
+	systemProperty("spring.profiles.active", "postgresql, test")
 }
 
 tasks.getByName<BootJar>("bootJar") {
