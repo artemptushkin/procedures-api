@@ -74,7 +74,7 @@ dependencies {
 	integrationTestImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
 	integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
 	integrationTestImplementation("com.playtika.testcontainers:embedded-postgresql:1.89")
-//	integrationTestImplementation("com.playtika.testcontainers:embedded-mysql:1.89")
+	integrationTestImplementation("com.playtika.testcontainers:embedded-mysql:1.89")
 }
 
 tasks.withType<KotlinCompile> {
