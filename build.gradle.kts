@@ -74,6 +74,7 @@ dependencies {
 	integrationTestImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
 	integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
 	integrationTestImplementation("com.playtika.testcontainers:embedded-postgresql:1.89")
+//	integrationTestImplementation("com.playtika.testcontainers:embedded-mysql:1.89")
 }
 
 tasks.withType<KotlinCompile> {
@@ -87,7 +88,7 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-task<Test>("integrationTest") {
+task<Test>("postgreSQLTest") {
 	description = "Runs the integration tests"
 	group = "verification"
 	testClassesDirs = sourceSets["integrationTest"].output.classesDirs
@@ -96,6 +97,28 @@ task<Test>("integrationTest") {
 	useJUnitPlatform()
 
 	systemProperty("spring.profiles.active", "postgresql, test")
+}
+
+task<Test>("mySQLTest") {
+	description = "Runs the integration tests"
+	group = "verification"
+	testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+	classpath = sourceSets["integrationTest"].runtimeClasspath
+
+	useJUnitPlatform()
+
+	systemProperty("spring.profiles.active", "mysql, test")
+}
+
+task<Test>("h2Test") {
+	description = "Runs the integration tests"
+	group = "verification"
+	testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+	classpath = sourceSets["integrationTest"].runtimeClasspath
+
+	useJUnitPlatform()
+
+	systemProperty("spring.profiles.active", "h2, test")
 }
 
 tasks.getByName<BootJar>("bootJar") {

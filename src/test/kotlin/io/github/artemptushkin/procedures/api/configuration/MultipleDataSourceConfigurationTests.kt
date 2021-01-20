@@ -9,14 +9,12 @@ import org.springframework.boot.test.context.ConfigDataApplicationContextInitial
 import org.springframework.context.ApplicationContext
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.datasource.init.DataSourceInitializer
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.sql.JDBCType
 import javax.sql.DataSource
 
 @ExtendWith(SpringExtension::class)
-@ActiveProfiles("config")
 @ContextConfiguration(classes = [MultipleDataSourceConfiguration::class], initializers = [ConfigDataApplicationContextInitializer::class])
 internal class MultipleDataSourceConfigurationTests {
 

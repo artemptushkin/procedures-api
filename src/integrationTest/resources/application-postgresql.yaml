@@ -5,13 +5,13 @@ operations:
       username: ${embedded.postgresql.user}
       password: ${embedded.postgresql.password}
       url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
-      schema: classpath:test-cat-schema.postgresql.sql
+      schema: classpath:postgresql/test-cat-schema.postgresql.sql
     dog-h2:
       driver-class-name: org.postgresql.Driver
       username: ${embedded.postgresql.user}
       password: ${embedded.postgresql.password}
       url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
-      schema: classpath:test-dog-schema.postgresql.sql
+      schema: classpath:postgresql/test-dog-schema.postgresql.sql
     #sample for tests to verify it doesn't fail on missing schema
     tortoise-h2:
       driver-class-name: org.postgresql.Driver
@@ -47,6 +47,8 @@ embedded:
     #this password can't be changed as overridden by PostgreSQLProperties class fields and other props I assume
     password: letmein
     database: test_db
+  mysql:
+    enabled: false
 spring:
   h2:
     console:
