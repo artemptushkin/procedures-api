@@ -40,16 +40,3 @@ operations:
         lastName:
           key: lastName
           type: VARCHAR
-embedded:
-  mysql:
-    enabled: true
-    user: test
-    #this password can't be changed as overridden by mysqlProperties class fields and other props I assume
-    password: test
-    database: test_db
-  postgresql:
-    enabled: false
-spring:
-  h2:
-    console:
-      enabled: true

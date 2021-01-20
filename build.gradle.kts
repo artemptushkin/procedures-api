@@ -97,6 +97,7 @@ task<Test>("postgreSQLTest") {
 	useJUnitPlatform()
 
 	systemProperty("spring.profiles.active", "postgresql, test")
+	systemProperty("embedded.postgresql.enabled", "true")
 }
 
 task<Test>("mySQLTest") {
@@ -108,6 +109,7 @@ task<Test>("mySQLTest") {
 	useJUnitPlatform()
 
 	systemProperty("spring.profiles.active", "mysql, test")
+	systemProperty("embedded.mysql.enabled", "true")
 }
 
 task<Test>("h2Test") {

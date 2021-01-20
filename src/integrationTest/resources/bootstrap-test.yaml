@@ -2,3 +2,15 @@ spring:
   cloud:
     config:
       enabled: false
+embedded:
+  mysql:
+    enabled: false #all the containers are disabled by default and are enabling in the Gradle tasks
+    user: test
+    password: test
+    database: test_db
+  postgresql:
+    enabled: false
+    user: postgresql
+    #this password can't be changed as overridden by PostgreSQLProperties class fields and other props I assume
+    password: letmein
+    database: test_db
