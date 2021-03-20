@@ -5,6 +5,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 buildscript {
 	repositories {
+		mavenLocal()
 		mavenCentral()
 	}
 }
@@ -24,6 +25,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 extra["springCloudVersion"] = "2020.0.2"
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 	maven { url = uri("https://repo.spring.io/snapshot") }
 	maven { url = uri("https://repo.spring.io/milestone") }
@@ -73,8 +75,8 @@ dependencies {
 
 	integrationTestImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
 	integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
-	integrationTestImplementation("com.playtika.testcontainers:embedded-postgresql:2.0.4")
-	integrationTestImplementation("com.playtika.testcontainers:embedded-mysql:2.0.4")
+	integrationTestImplementation("com.playtika.testcontainers:embedded-postgresql:2.0.5-SNAPSHOT")
+	integrationTestImplementation("com.playtika.testcontainers:embedded-mysql:2.0.5-SNAPSHOT")
 }
 
 tasks.withType<KotlinCompile> {

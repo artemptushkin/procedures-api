@@ -77,9 +77,9 @@ internal class ProceduresControllerTests {
 
         val dog = getJdbcTemplateByKey("dog")
             .queryForObject(
-                "select id, name, last_name from cat where name = :name",
+                "select id, name, last_name from dog where name = :name",
                 MapSqlParameterSource(
-                    mapOf("name" to "John")
+                    mapOf("name" to "Tomas", "last_name" to "The Great")
                 ),
                 { rs, _ ->
                     Dog(rs.getLong("ID"), rs.getString("name"), rs.getString("last_name"))
@@ -87,8 +87,8 @@ internal class ProceduresControllerTests {
             )
 
         AssertionsForClassTypes.assertThat(dog).isNotNull
-        AssertionsForClassTypes.assertThat(dog!!.name).isEqualTo("John")
-        AssertionsForClassTypes.assertThat(dog.lastName).isEqualTo("Taylor")
+        AssertionsForClassTypes.assertThat(dog!!.name).isEqualTo("Tomas")
+        AssertionsForClassTypes.assertThat(dog.lastName).isEqualTo("The Great")
     }
 
     class Cat(val id: Long, val name: String, val lastName: String?)
