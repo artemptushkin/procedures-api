@@ -24,7 +24,7 @@ internal class ProceduresControllerValidationsTests {
     @Test
     fun itReturnsBadRequestOnMissingRequiredValue() {
         mockMvc.perform(
-            post("/procedures/cat-h2/create-dog")
+            post("/procedures/cat/create-dog")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     mapOf(
@@ -63,7 +63,7 @@ internal class ProceduresControllerValidationsTests {
     @Test
     fun itReturnsBadRequestOnInvalidProcedureName() {
         mockMvc.perform(
-            post("/procedures/cat-h2/invalid-procedure")
+            post("/procedures/cat/invalid-procedure")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     mapOf(

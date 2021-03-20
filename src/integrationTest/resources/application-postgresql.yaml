@@ -1,19 +1,19 @@
 operations:
   dataSource:
-    cat-h2:
+    cat:
       driver-class-name: org.postgresql.Driver
       username: ${embedded.postgresql.user}
       password: ${embedded.postgresql.password}
       url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
       schema: classpath:postgresql/test-cat-schema.postgresql.sql
-    dog-h2:
+    dog:
       driver-class-name: org.postgresql.Driver
       username: ${embedded.postgresql.user}
       password: ${embedded.postgresql.password}
       url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
       schema: classpath:postgresql/test-dog-schema.postgresql.sql
     #sample for tests to verify it doesn't fail on missing schema
-    tortoise-h2:
+    tortoise:
       driver-class-name: org.postgresql.Driver
       username: ${embedded.postgresql.user}
       password: ${embedded.postgresql.password}
