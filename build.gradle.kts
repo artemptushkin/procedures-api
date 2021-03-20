@@ -9,7 +9,7 @@ buildscript {
 	}
 }
 plugins {
-	id("org.springframework.boot") version "2.4.0"
+	id("org.springframework.boot") version "2.4.4"
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
 	id("org.jetbrains.kotlin.jvm") version "1.4.20-RC"
 	id("org.jetbrains.kotlin.plugin.spring") version "1.4.20-RC"
@@ -21,7 +21,7 @@ group = "io.github.artemptushkin.procedures.api"
 version = "0.0.4-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
-extra["springCloudVersion"] = "2020.0.0-M6"
+extra["springCloudVersion"] = "2020.0.2"
 
 repositories {
 	mavenCentral()

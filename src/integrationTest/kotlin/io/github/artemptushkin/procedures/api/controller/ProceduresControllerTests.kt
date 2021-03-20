@@ -46,7 +46,7 @@ internal class ProceduresControllerTests {
 
         val cat = getJdbcTemplateByKey("cat-h2")
             .queryForObject(
-                "SELECT ID, NAME, LAST_NAME FROM CAT WHERE NAME = :name",
+                "select id, name, last_name from cat where name = :name",
                 MapSqlParameterSource(
                     mapOf("name" to "John")
                 ),
@@ -77,7 +77,7 @@ internal class ProceduresControllerTests {
 
         val dog = getJdbcTemplateByKey("dog-h2")
             .queryForObject(
-                "SELECT ID, NAME, LAST_NAME FROM CAT WHERE NAME = :name",
+                "select id, name, last_name from cat where name = :name",
                 MapSqlParameterSource(
                     mapOf("name" to "John")
                 ),
@@ -91,8 +91,8 @@ internal class ProceduresControllerTests {
         AssertionsForClassTypes.assertThat(dog.lastName).isEqualTo("Taylor")
     }
 
-    class Cat(val id: Long, val name: String, val lastName: String)
-    class Dog(val id: Long, val name: String, val lastName: String)
+    class Cat(val id: Long, val name: String, val lastName: String?)
+    class Dog(val id: Long, val name: String, val lastName: String?)
 
     private fun getJdbcTemplateByKey(key: String): NamedParameterJdbcTemplate {
         return applicationContext.getBean(key.getJdbcTemplateBeanName(), NamedParameterJdbcTemplate::class.java)

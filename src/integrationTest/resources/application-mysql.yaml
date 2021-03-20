@@ -21,7 +21,7 @@ operations:
   procedures:
     create-cat:
       sql: |
-        INSERT INTO CAT (NAME, LAST_NAME) VALUES (:name, :lastName)
+        insert into cat (name, last_name) values (:name, :lastName)
       parameters:
         name:
           key: name
@@ -31,7 +31,7 @@ operations:
           type: VARCHAR
     create-dog:
       sql: |
-        INSERT INTO DOG (NAME, LAST_NAME) VALUES (:name, :lastName)
+        insert into dog (name, last_name) values (:name, :lastName)
       parameters:
         name:
           key: name
