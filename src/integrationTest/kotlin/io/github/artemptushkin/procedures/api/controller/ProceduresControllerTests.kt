@@ -32,7 +32,7 @@ internal class ProceduresControllerTests {
     @Test
     fun itExecutesCreatingCats() {
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/procedures/cat-h2/create-cat")
+            MockMvcRequestBuilders.post("/procedures/cat/create-cat")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     mapOf(
@@ -44,7 +44,7 @@ internal class ProceduresControllerTests {
             MockMvcResultMatchers.status().isOk
         )
 
-        val cat = getJdbcTemplateByKey("cat-h2")
+        val cat = getJdbcTemplateByKey("cat")
             .queryForObject(
                 "select id, name, last_name from cat where name = :name",
                 MapSqlParameterSource(
@@ -63,7 +63,7 @@ internal class ProceduresControllerTests {
     @Test
     fun itExecutesCreatingDogs() {
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/procedures/dog-h2/create-dog")
+            MockMvcRequestBuilders.post("/procedures/dog/create-dog")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(
                     mapOf(
@@ -75,7 +75,7 @@ internal class ProceduresControllerTests {
             MockMvcResultMatchers.status().isOk
         )
 
-        val dog = getJdbcTemplateByKey("dog-h2")
+        val dog = getJdbcTemplateByKey("dog")
             .queryForObject(
                 "select id, name, last_name from cat where name = :name",
                 MapSqlParameterSource(

@@ -1,11 +1,11 @@
 operations:
   dataSource:
     cat:
-      driver-class-name: org.postgresql.Driver
-      username: ${embedded.postgresql.user}
-      password: ${embedded.postgresql.password}
-      url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
-      schema: classpath:postgresql/test-cat-schema.postgresql.sql
+      driver-class-name: com.mysql.jdbc.Driver
+      username: ${embedded.mysql.user}
+      password: ${embedded.mysql.password}
+      url: jdbc:mysql://localhost:${embedded.mysql.port}/${embedded.mysql.database}
+      schema: classpath:mysql/test-cat-schema.mysql.sql
     dog:
       driver-class-name: org.postgresql.Driver
       username: ${embedded.postgresql.user}
@@ -21,7 +21,7 @@ operations:
   procedures:
     create-cat:
       sql: |
-        INSERT INTO CAT (NAME, LAST_NAME) VALUES (:name, :lastName)
+        insert into cat (name, last_name) values (:name, :lastname)
       parameters:
         name:
           key: name
@@ -31,7 +31,7 @@ operations:
           type: VARCHAR
     create-dog:
       sql: |
-        INSERT INTO DOG (NAME, LAST_NAME) VALUES (:name, :lastName)
+        insert into dog (name, last_name) values (:name, :lastname)
       parameters:
         name:
           key: name

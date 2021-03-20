@@ -1,19 +1,19 @@
 operations:
   dataSource:
-    cat-h2:
+    cat:
       driver-class-name: com.mysql.jdbc.Driver
       username: ${embedded.mysql.user}
       password: ${embedded.mysql.password}
       url: jdbc:mysql://localhost:${embedded.mysql.port}/${embedded.mysql.database}
       schema: classpath:mysql/test-cat-schema.mysql.sql
-    dog-h2:
+    dog:
       driver-class-name: com.mysql.jdbc.Driver
       username: ${embedded.mysql.user}
       password: ${embedded.mysql.password}
       url: jdbc:mysql://localhost:${embedded.mysql.port}/${embedded.mysql.database}
       schema: classpath:mysql/test-dog-schema.mysql.sql
     #sample for tests to verify it doesn't fail on missing schema
-    tortoise-h2:
+    tortoise:
       driver-class-name: com.mysql.jdbc.Driver
       username: ${embedded.mysql.user}
       password: ${embedded.mysql.password}

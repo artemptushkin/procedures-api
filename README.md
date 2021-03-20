@@ -19,7 +19,26 @@ Where:
 * datasource - a value from the `operations.dataSource` keys of application properties
 * procedureName - a value from `operations.procedures` keys of application properties
 
-The
+The request body is JSON and each field will be mapped by the JSON field name with `operations.procedures.your-procedure.parameters[keys]`
+For example:
+```yaml
+#property
+
+lastName:
+  key: last_name
+  type: VARCHAR
+```
+Requires in the body
+```json
+{
+  "lastName": "The Great"
+}
+```
+
+The value of JSON field will be used as SQL named query parameters:
+```sql
+insert into cat (last_name) values (:last_name)
+```
 
 ### How to build
 
@@ -42,4 +61,5 @@ Or use Intellij Idea Run configurations from the [run directory](.run) for Idea 
 3. Documentation on application properties
 4. Logging of database queries
 5. Kubernetes setup
-6. integration test sourceSet
+6. integration test sourceSet refactor
+7. Write test for multiple database: blocked by the issue with same bean names in auto configurations `datasourceDependencyPostProcessor`
