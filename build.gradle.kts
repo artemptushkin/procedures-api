@@ -5,6 +5,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 buildscript {
 	repositories {
+		mavenLocal()
 		mavenCentral()
 	}
 }
@@ -24,6 +25,7 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 extra["springCloudVersion"] = "2020.0.2"
 
 repositories {
+	mavenLocal()
 	mavenCentral()
 	maven { url = uri("https://repo.spring.io/snapshot") }
 	maven { url = uri("https://repo.spring.io/milestone") }
@@ -73,8 +75,8 @@ dependencies {
 
 	integrationTestImplementation("org.junit.jupiter:junit-jupiter:5.4.2")
 	integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
-	integrationTestImplementation("com.playtika.testcontainers:embedded-postgresql:1.89")
-	integrationTestImplementation("com.playtika.testcontainers:embedded-mysql:1.89")
+	integrationTestImplementation("com.playtika.testcontainers:embedded-postgresql:2.0.5-SNAPSHOT")
+	integrationTestImplementation("com.playtika.testcontainers:embedded-mysql:2.0.5-SNAPSHOT")
 }
 
 tasks.withType<KotlinCompile> {
@@ -89,7 +91,7 @@ tasks.withType<Test> {
 }
 
 task<Test>("postgreSQLTest") {
-	description = "Runs the integration tests"
+	description = "Runs the integration tests against PostgreSQL database using `postgresql` Spring profile"
 	group = "verification"
 	testClassesDirs = sourceSets["integrationTest"].output.classesDirs
 	classpath = sourceSets["integrationTest"].runtimeClasspath
@@ -101,7 +103,7 @@ task<Test>("postgreSQLTest") {
 }
 
 task<Test>("mySQLTest") {
-	description = "Runs the integration tests"
+	description = "Runs the integration tests against MySQL database using `mysql` Spring profile"
 	group = "verification"
 	testClassesDirs = sourceSets["integrationTest"].output.classesDirs
 	classpath = sourceSets["integrationTest"].runtimeClasspath
@@ -113,7 +115,7 @@ task<Test>("mySQLTest") {
 }
 
 task<Test>("h2Test") {
-	description = "Runs the integration tests"
+	description = "Runs the integration tests against h2 database using `h2` Spring profile"
 	group = "verification"
 	testClassesDirs = sourceSets["integrationTest"].output.classesDirs
 	classpath = sourceSets["integrationTest"].runtimeClasspath
@@ -121,6 +123,19 @@ task<Test>("h2Test") {
 	useJUnitPlatform()
 
 	systemProperty("spring.profiles.active", "h2, test")
+}
+
+task<Test>("multipleDatabaseTest") {
+	description = "Runs the integration tests against mysql and postgresql databases using `mix` Spring profile"
+	group = "verification"
+	testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+	classpath = sourceSets["integrationTest"].runtimeClasspath
+
+	useJUnitPlatform()
+
+	systemProperty("spring.profiles.active", "mix, test")
+	systemProperty("embedded.mysql.enabled", "true")
+	systemProperty("embedded.postgresql.enabled", "true")
 }
 
 tasks.getByName<BootJar>("bootJar") {
