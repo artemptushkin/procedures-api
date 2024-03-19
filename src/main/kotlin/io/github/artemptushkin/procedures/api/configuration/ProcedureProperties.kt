@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.validation.annotation.Validated
 import java.sql.JDBCType
-import javax.validation.constraints.NotEmpty
+import jakarta.validation.constraints.NotEmpty
 
 @Validated
 @ConfigurationProperties("operations")

@@ -1,7 +1,7 @@
 package io.github.artemptushkin.procedures.api.validation
 
-import javax.validation.Constraint
-import javax.validation.Payload
+import jakarta.validation.Constraint
+import jakarta.validation.Payload
 import kotlin.reflect.KClass
 
 @Constraint(validatedBy = [ProcedureRequestValidator::class])

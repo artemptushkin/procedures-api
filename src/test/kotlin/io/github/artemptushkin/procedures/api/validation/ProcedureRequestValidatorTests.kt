@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import java.sql.JDBCType
-import javax.validation.ConstraintValidatorContext
+import jakarta.validation.ConstraintValidatorContext
 
 internal class ProcedureRequestValidatorTests {
 

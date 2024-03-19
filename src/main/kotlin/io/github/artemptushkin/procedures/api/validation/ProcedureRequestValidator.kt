@@ -3,8 +3,8 @@ package io.github.artemptushkin.procedures.api.validation
 import io.github.artemptushkin.procedures.api.configuration.ProcedureProperties
 import io.github.artemptushkin.procedures.api.configuration.ProcedureProperty
 import io.github.artemptushkin.procedures.api.domain.ProcedureRequest
-import javax.validation.ConstraintValidator
-import javax.validation.ConstraintValidatorContext
+import jakarta.validation.ConstraintValidator
+import jakarta.validation.ConstraintValidatorContext
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl
 
 

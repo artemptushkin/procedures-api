@@ -2,26 +2,19 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-}
 plugins {
-    id("org.springframework.boot") version "2.6.2"
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    id("org.jetbrains.kotlin.jvm") version "1.6.10"
-    id("org.jetbrains.kotlin.plugin.spring") version "1.6.10"
+    id("org.springframework.boot") version "3.2.3"
+    id("io.spring.dependency-management") version "1.1.4"
+    id("org.jetbrains.kotlin.jvm") version "1.9.23"
+    id("org.jetbrains.kotlin.plugin.spring") version "1.9.23"
     /* org.jetbrains.kotlin.kapt was added due to generate configuration properties metadata */
-    id("org.jetbrains.kotlin.kapt") version "1.6.10"
+    id("org.jetbrains.kotlin.kapt") version "1.9.23"
 }
 
 group = "io.github.artemptushkin.procedures.api"
-version = "0.0.4-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+version = "0.0.5"
 
-extra["springCloudVersion"] = "2021.0.0"
+extra["springCloudVersion"] = "2023.0.0"
 
 repositories {
     mavenLocal()
@@ -51,6 +44,13 @@ dependencyManagement {
     }
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+        vendor.set(JvmVendorSpec.ADOPTIUM)
+    }
+}
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -74,14 +74,13 @@ dependencies {
 
     integrationTestImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     integrationTestImplementation("org.springframework.boot:spring-boot-starter-test")
-    integrationTestImplementation("com.playtika.testcontainers:embedded-postgresql:2.0.18")
-    integrationTestImplementation("com.playtika.testcontainers:embedded-mysql:2.0.18")
+    integrationTestImplementation("com.playtika.testcontainers:embedded-postgresql:3.1.5")
+    integrationTestImplementation("com.playtika.testcontainers:embedded-mysql:3.1.5")
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
     }
 }
 

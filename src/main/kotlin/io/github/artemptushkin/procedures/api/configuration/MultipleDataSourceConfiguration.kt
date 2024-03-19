@@ -57,13 +57,13 @@ class MultipleDataSourceConfiguration {
         dataSourceProperties: DataSourceProperties
     ): ResourceDatabasePopulator {
         val resourceDatabasePopulator = ResourceDatabasePopulator()
-        dataSourceProperties.schema?.forEach { location ->
+        /*dataSourceProperties.schema?.forEach { location ->
             doGetResources(applicationContext, location).forEach { resource ->
                 resourceDatabasePopulator.addScript(
                     resource
                 )
             }
-        }
+        } todo not supported since v3 */
         return resourceDatabasePopulator
     }
 

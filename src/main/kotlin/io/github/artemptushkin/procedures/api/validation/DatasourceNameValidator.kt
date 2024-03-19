@@ -1,8 +1,8 @@
 package io.github.artemptushkin.procedures.api.validation
 
 import io.github.artemptushkin.procedures.api.configuration.ProcedureProperties
-import javax.validation.ConstraintValidator
-import javax.validation.ConstraintValidatorContext
+import jakarta.validation.ConstraintValidator
+import jakarta.validation.ConstraintValidatorContext
 
 class DatasourceNameValidator(private val procedureProperties: ProcedureProperties) :
     ConstraintValidator<DatasourceNameConstraint, String> {

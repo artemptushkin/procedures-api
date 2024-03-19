@@ -2,7 +2,7 @@ package io.github.artemptushkin.procedures.api.domain
 
 import io.github.artemptushkin.procedures.api.validation.ProcedureNameConstraint
 import org.springframework.validation.annotation.Validated
-import javax.validation.Valid
+import jakarta.validation.Valid
 
 @Validated
 data class ProcedureRequest(

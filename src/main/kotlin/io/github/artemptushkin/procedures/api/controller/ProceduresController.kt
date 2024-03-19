@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
-import javax.validation.ConstraintViolationException
+import jakarta.validation.ConstraintViolationException
 
 @Validated
 @RestController
