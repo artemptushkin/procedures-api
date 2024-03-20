@@ -57,6 +57,7 @@ Terminal:
 Or use Intellij Idea Run configurations from the [run directory](.run) for Idea 2019.3+
 
 ### Used Gradle tasks
+
 * javadoc - generate Spring Boot Configuration properties metadata to the [build directory](build/tmp/kapt3/classes/main/META-INF/spring-configuration-metadata.json)
 
 #### Todo
