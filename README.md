@@ -29,7 +29,9 @@ lastName:
   key: last_name
   type: VARCHAR
 ```
-Requires in the body
+
+Requires in the body:
+
 ```json
 {
   "lastName": "The Great"
