@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.validation.annotation.Validated
 import java.sql.JDBCType
 import jakarta.validation.constraints.NotEmpty
+import org.springframework.boot.autoconfigure.sql.init.SqlInitializationProperties
 
 @Validated
 @ConfigurationProperties("operations")
@@ -12,8 +13,13 @@ class ProcedureProperties {
     @NotEmpty
     lateinit var procedures: Map<String, ProcedureProperty>
     @NotEmpty
-    lateinit var dataSource: Map<String, DataSourceProperties>
+    lateinit var properties: Map<String, DataSourceSqlProperties>
 }
+
+data class DataSourceSqlProperties(
+    val datasource: DataSourceProperties,
+    val sql: SqlInitializationProperties? = null
+)
 
 class ProcedureProperty {
     lateinit var name: String

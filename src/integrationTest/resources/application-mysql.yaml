@@ -1,23 +1,30 @@
 operations:
-  dataSource:
+  properties:
     cat:
-      driver-class-name: com.mysql.jdbc.Driver
-      username: ${embedded.mysql.user}
-      password: ${embedded.mysql.password}
-      url: jdbc:mysql://localhost:${embedded.mysql.port}/${embedded.mysql.database}
-      schema: classpath:mysql/test-cat-schema.mysql.sql
+      datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        username: ${embedded.mysql.user}
+        password: ${embedded.mysql.password}
+        url: jdbc:mysql://localhost:${embedded.mysql.port}/${embedded.mysql.database}
+      sql:
+        schema-locations:
+          - classpath:mysql/test-cat-schema.mysql.sql
     dog:
-      driver-class-name: com.mysql.jdbc.Driver
-      username: ${embedded.mysql.user}
-      password: ${embedded.mysql.password}
-      url: jdbc:mysql://localhost:${embedded.mysql.port}/${embedded.mysql.database}
-      schema: classpath:mysql/test-dog-schema.mysql.sql
+      datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        username: ${embedded.mysql.user}
+        password: ${embedded.mysql.password}
+        url: jdbc:mysql://localhost:${embedded.mysql.port}/${embedded.mysql.database}
+      sql:
+        schema-locations:
+          - classpath:mysql/test-dog-schema.mysql.sql
     #sample for tests to verify it doesn't fail on missing schema
     tortoise:
-      driver-class-name: com.mysql.jdbc.Driver
-      username: ${embedded.mysql.user}
-      password: ${embedded.mysql.password}
-      url: jdbc:mysql://localhost:${embedded.mysql.port}/${embedded.mysql.database}
+      datasource:
+        driver-class-name: com.mysql.jdbc.Driver
+        username: ${embedded.mysql.user}
+        password: ${embedded.mysql.password}
+        url: jdbc:mysql://localhost:${embedded.mysql.port}/${embedded.mysql.database}
   procedures:
     create-cat:
       sql: |

@@ -7,7 +7,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     id("org.jetbrains.kotlin.jvm") version "1.9.23"
     id("org.jetbrains.kotlin.plugin.spring") version "1.9.23"
-    /* org.jetbrains.kotlin.kapt was added due to generate configuration properties metadata */
+    /* org.jetbrains.kotlin.kapt was added to generate configuration properties metadata */
     id("org.jetbrains.kotlin.kapt") version "1.9.23"
 }
 

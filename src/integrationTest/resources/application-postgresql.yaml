@@ -1,23 +1,30 @@
 operations:
-  dataSource:
+  properties:
     cat:
-      driver-class-name: org.postgresql.Driver
-      username: ${embedded.postgresql.user}
-      password: ${embedded.postgresql.password}
-      url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
-      schema: classpath:postgresql/test-cat-schema.postgresql.sql
+      datasource:
+        driver-class-name: org.postgresql.Driver
+        username: ${embedded.postgresql.user}
+        password: ${embedded.postgresql.password}
+        url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
+      sql:
+        schema-locations:
+          - classpath:postgresql/test-cat-schema.postgresql.sql
     dog:
-      driver-class-name: org.postgresql.Driver
-      username: ${embedded.postgresql.user}
-      password: ${embedded.postgresql.password}
-      url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
-      schema: classpath:postgresql/test-dog-schema.postgresql.sql
+      datasource:
+        driver-class-name: org.postgresql.Driver
+        username: ${embedded.postgresql.user}
+        password: ${embedded.postgresql.password}
+        url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
+      sql:
+        schema-locations:
+          - classpath:postgresql/test-dog-schema.postgresql.sql
     #sample for tests to verify it doesn't fail on missing schema
     tortoise:
-      driver-class-name: org.postgresql.Driver
-      username: ${embedded.postgresql.user}
-      password: ${embedded.postgresql.password}
-      url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
+      datasource:
+        driver-class-name: org.postgresql.Driver
+        username: ${embedded.postgresql.user}
+        password: ${embedded.postgresql.password}
+        url: jdbc:postgresql://localhost:${embedded.postgresql.port}/${embedded.postgresql.database}
   procedures:
     create-cat:
       sql: |

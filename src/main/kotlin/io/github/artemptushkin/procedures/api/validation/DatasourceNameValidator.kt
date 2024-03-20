@@ -14,6 +14,6 @@ class DatasourceNameValidator(private val procedureProperties: ProcedureProperti
 
     override fun isValid(value: String?, context: ConstraintValidatorContext?): Boolean {
         if (value == null) return acceptNull
-        return procedureProperties.dataSource.containsKey(value)
+        return procedureProperties.properties.containsKey(value)
     }
 }

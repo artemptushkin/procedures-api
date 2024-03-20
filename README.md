@@ -9,7 +9,7 @@ This is Spring Boot service that allows to call SQL commands against multiple da
 
 ### How to use
 
-1. Setup properties using [the samples from tests](src/test/resources/application-test.yaml)
+1. Setup properties using [the samples from tests](src/test/resources/application.yaml)
 2. Build an HTTP request using [the samples](sample-calls)
 
 ### How does it work

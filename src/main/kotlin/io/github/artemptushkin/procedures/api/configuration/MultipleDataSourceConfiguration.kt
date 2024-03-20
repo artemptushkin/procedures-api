@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariDataSource
 import io.github.artemptushkin.procedures.api.service.ApplicationProceduresService
 import org.springframework.beans.factory.support.DefaultListableBeanFactory
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
+import org.springframework.boot.autoconfigure.sql.init.SqlDataSourceScriptDatabaseInitializer
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
@@ -24,15 +25,14 @@ class MultipleDataSourceConfiguration {
         applicationContext: ApplicationContext
     ): Map<String, ApplicationProceduresService> {
         val beanFactory = applicationContext.autowireCapableBeanFactory as DefaultListableBeanFactory
-        procedureProperties.dataSource
+        procedureProperties.properties
             .entries
             .forEach {
-                val dataSource = createHikariDataSource(it.value)
+                val dataSource = createHikariDataSource(it.value.datasource)
                 val dataSourceInitializer = DataSourceInitializer()
                 val resourceDatabasePopulator = prepareDatabasePopulator(applicationContext, it.value)
                 val jdbcTemplate = NamedParameterJdbcTemplate(dataSource)
                 val applicationProceduresService = ApplicationProceduresService(jdbcTemplate, procedureProperties)
-
                 dataSourceInitializer.setDataSource(dataSource)
                 dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator)
 
@@ -40,6 +40,11 @@ class MultipleDataSourceConfiguration {
                 initAndRegisterBean(dataSourceInitializer, it.key.getDataSourceInitializerBeanName(), beanFactory)
                 initAndRegisterBean(jdbcTemplate, it.key.getJdbcTemplateBeanName(), beanFactory)
                 initAndRegisterBean(applicationProceduresService, it.key, beanFactory)
+                it.value.sql?.let { _ ->
+                    SqlDataSourceScriptDatabaseInitializer(dataSource, it.value.sql)
+                }?.let { initializer ->
+                    initAndRegisterBean(initializer, it.key.getSqlInitializerBeanName(), beanFactory)
+                }
 
                 it.key to applicationProceduresService
             }
@@ -54,16 +59,16 @@ class MultipleDataSourceConfiguration {
 
     private fun prepareDatabasePopulator(
         applicationContext: ApplicationContext,
-        dataSourceProperties: DataSourceProperties
+        dataSourceProperties: DataSourceSqlProperties
     ): ResourceDatabasePopulator {
         val resourceDatabasePopulator = ResourceDatabasePopulator()
-        /*dataSourceProperties.schema?.forEach { location ->
+        dataSourceProperties.sql?.schemaLocations?.forEach { location ->
             doGetResources(applicationContext, location).forEach { resource ->
                 resourceDatabasePopulator.addScript(
                     resource
                 )
             }
-        } todo not supported since v3 */
+        }
         return resourceDatabasePopulator
     }
 

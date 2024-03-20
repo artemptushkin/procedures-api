@@ -1,20 +1,27 @@
 operations:
-  dataSource:
+  properties:
     cat:
-      driver-class-name: org.h2.Driver
-      username: sa
-      url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
-      schema: classpath:h2/test-cat-schema.h2.sql
+      datasource:
+        driver-class-name: org.h2.Driver
+        username: sa
+        url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+      sql:
+        schema-locations:
+          - classpath:h2/test-cat-schema.h2.sql
     dog:
-      driver-class-name: org.h2.Driver
-      username: sa
-      url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
-      schema: classpath:h2/test-dog-schema.h2.sql
+      datasource:
+        driver-class-name: org.h2.Driver
+        username: sa
+        url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+      sql:
+        schema-locations:
+          - classpath:h2/test-dog-schema.h2.sql
     #sample for tests to verify it doesn't fail on missing schema
     tortoise:
-      driver-class-name: org.h2.Driver
-      username: sa
-      url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+      datasource:
+        driver-class-name: org.h2.Driver
+        username: sa
+        url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
   procedures:
     create-cat:
       sql: |
