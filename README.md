@@ -39,6 +39,7 @@ Requires in the body:
 ```
 
 The value of JSON field will be used as SQL named query parameters:
+
 ```sql
 insert into cat (last_name) values (:last_name)
 ```
