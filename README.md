@@ -51,6 +51,7 @@ insert into cat (last_name) values (:last_name)
 ### How to run locally
 
 Terminal:
+
 `./gradlew bootRun --args='--spring.profiles.active=dev'`
 
 Or use Intellij Idea Run configurations from the [run directory](.run) for Idea 2019.3+
